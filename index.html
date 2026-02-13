@@ -14,8 +14,8 @@
   <meta property="og:description" content="Pusat informasi data kependudukan Kalurahan Kedungsari secara transparan dan terbuka."/>
   <meta property="og:locale" content="id_ID"/>
   <meta name="twitter:card" content="summary_large_image"/>
-  <link rel="canonical" href="https://kalurahan-kedungsari.github.io/"/>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"GovernmentOrganization","name":"Rumah Data Kependudukan Kalurahan Kedungsari","url":"https://kalurahan-kedungsari.github.io/","address":{"@type":"PostalAddress","addressLocality":"Kedungsari","addressRegion":"Yogyakarta","addressCountry":"ID"}}</script>
+  <link rel="canonical" href="https://kalurahan-kedungsari.github.io/rumah-data/"/>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"GovernmentOrganization","name":"Rumah Data Kependudukan Kalurahan Kedungsari","url":"https://kalurahan-kedungsari.github.io/rumah-data/","address":{"@type":"PostalAddress","addressLocality":"Kedungsari","addressRegion":"Yogyakarta","addressCountry":"ID"}}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -35,7 +35,6 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 /* HEADER */
 header{position:relative;z-index:10;background:linear-gradient(135deg,var(--green) 0%,#1e3a0e 60%,var(--brown) 100%);overflow:hidden}
 header::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0 L80 40 L40 80 L0 40 Z' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E") repeat;pointer-events:none}
-/* FIXED bukan absolute - agar tidak dipotong overflow:hidden dari header */
 #adminTrigger{position:fixed;top:0;right:0;width:80px;height:80px;z-index:500;background:transparent;border:none;outline:none;cursor:default;-webkit-tap-highlight-color:transparent;user-select:none;touch-action:manipulation}
 .header-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:32px 24px 40px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px}
 .header-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(200,146,42,.25);border:1px solid rgba(200,146,42,.5);border-radius:100px;padding:6px 16px;font-family:'DM Mono',monospace;font-size:.72rem;color:var(--gold-lite);letter-spacing:.1em;text-transform:uppercase;animation:fadeDown .6s ease both}
@@ -75,6 +74,7 @@ main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:40px 20p
 .photo-frame{break-inside:avoid;margin-bottom:16px;background:var(--white);border-radius:var(--r-md);overflow:hidden;box-shadow:0 2px 12px var(--shadow);cursor:pointer;transition:var(--tr);position:relative}
 .photo-frame:hover{transform:translateY(-4px) scale(1.015);box-shadow:0 12px 32px var(--shadow),0 0 0 1px rgba(200,146,42,.25)}
 .photo-frame:hover .frame-overlay{opacity:1}
+.photo-img{width:100%;height:auto;display:block;object-fit:cover}
 .emoji-frame{aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--parchment),var(--cream));border:2px dashed rgba(160,120,80,.35)}
 .emoji-frame .big-emoji{font-size:2.8rem;line-height:1}
 .emoji-frame .frame-caption{font-size:.78rem;color:var(--brown-lite);text-align:center;padding:0 12px;font-style:italic}
@@ -93,572 +93,701 @@ main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:40px 20p
 .report-icon{font-size:1.9rem}
 .report-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--brown);font-weight:700}
 .report-card p{font-size:.82rem;color:var(--brown-lite);line-height:1.6;flex:1}
-.report-meta{display:flex;justify-content:space-between;align-items:center;padding-top:12px;border-top:1px solid rgba(61,43,31,.07)}
-.report-date{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--brown-lite)}
-.report-btn{font-size:.74rem;font-weight:600;color:var(--green);background:rgba(45,80,22,.08);border:none;padding:5px 12px;border-radius:100px;cursor:pointer;transition:var(--tr)}
-.report-btn:hover{background:var(--green);color:var(--white)}
+.report-card .report-tag{font-size:.68rem;color:var(--green-mid);text-transform:uppercase;letter-spacing:.08em;font-weight:500}
+.report-card .report-btn{align-self:flex-start;padding:8px 16px;background:linear-gradient(135deg,var(--green),var(--green-mid));color:var(--white);border:none;border-radius:var(--r-sm);font-size:.82rem;font-weight:500;cursor:pointer;transition:var(--tr)}
+.report-card .report-btn:hover{background:linear-gradient(135deg,var(--green-mid),var(--green));transform:translateY(-1px)}
 
-/* KEGIATAN */
-.kegiatan-strip{display:flex;gap:16px;overflow-x:auto;padding-bottom:12px;margin-bottom:64px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
-.kegiatan-strip::-webkit-scrollbar{height:5px}.kegiatan-strip::-webkit-scrollbar-track{background:rgba(61,43,31,.07);border-radius:4px}.kegiatan-strip::-webkit-scrollbar-thumb{background:var(--brown-lite);border-radius:4px}
-.kegiatan-card{flex:0 0 260px;scroll-snap-align:start;background:var(--white);border-radius:var(--r-md);overflow:hidden;box-shadow:0 2px 10px var(--shadow);transition:var(--tr);cursor:pointer}
-.kegiatan-card:hover{transform:translateY(-3px) scale(1.015);box-shadow:0 10px 28px var(--shadow)}
-.kegiatan-img{height:160px;background:linear-gradient(135deg,var(--parchment),var(--cream));display:flex;align-items:center;justify-content:center;font-size:3rem;border-bottom:2px dashed rgba(160,120,80,.3)}
-.kegiatan-info{padding:14px}
-.kegiatan-info h4{font-weight:600;font-size:.88rem;color:var(--brown);margin-bottom:4px}
-.kegiatan-info span{font-size:.74rem;color:var(--brown-lite)}
-
-/* PENGUMUMAN */
-.pengumuman-list{display:flex;flex-direction:column;gap:14px;margin-bottom:64px}
-.pengumuman-item{background:var(--white);border-radius:var(--r-md);padding:16px 20px;display:flex;gap:16px;align-items:flex-start;box-shadow:0 2px 8px var(--shadow);border:1px solid rgba(61,43,31,.07);transition:var(--tr)}
-.pengumuman-item:hover{transform:translateX(4px);border-left:3px solid var(--gold)}
-.pengumuman-emoji{font-size:1.6rem;flex-shrink:0;margin-top:2px}
-.pengumuman-body h4{font-weight:600;font-size:.9rem;color:var(--brown);margin-bottom:4px}
-.pengumuman-body p{font-size:.8rem;color:var(--brown-lite);line-height:1.55}
-.pengumuman-date{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--brown-lite);white-space:nowrap;margin-left:auto;flex-shrink:0}
-
-/* LIGHTBOX */
-.lightbox{display:none;position:fixed;inset:0;z-index:9999;background:rgba(20,12,5,.9);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:24px}
-.lightbox.active{display:flex}
-.lightbox-inner{max-width:900px;max-height:90vh;width:100%;position:relative;animation:lbIn .25s ease}
-@keyframes lbIn{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
-.lightbox-emoji-big{width:100%;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:5rem;gap:16px;background:rgba(245,239,224,.05);border-radius:var(--r-md)}
-.lightbox-emoji-big p{font-size:1rem;color:rgba(253,250,244,.8);text-align:center;max-width:360px}
-.lightbox-close{position:absolute;top:-14px;right:-14px;width:40px;height:40px;background:var(--gold);color:var(--brown);border:none;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;transition:var(--tr);box-shadow:0 4px 12px rgba(0,0,0,.35)}
-.lightbox-close:hover{background:var(--gold-lite);transform:rotate(90deg)}
+/* ACTIVITIES */
+.activities-list{display:flex;flex-direction:column;gap:16px;margin-bottom:64px}
+.activity-item{background:var(--white);border-radius:var(--r-md);padding:18px 20px;border-left:4px solid var(--teal);box-shadow:0 2px 8px var(--shadow);display:flex;align-items:center;gap:16px;transition:var(--tr);cursor:pointer}
+.activity-item:hover{transform:translateX(4px);box-shadow:0 6px 20px var(--shadow)}
+.activity-emoji{font-size:2rem;flex-shrink:0}
+.activity-body{flex:1}
+.activity-body strong{display:block;font-size:.95rem;color:var(--brown);margin-bottom:4px}
+.activity-body span{font-size:.78rem;color:var(--brown-lite)}
 
 /* FOOTER */
-footer{position:relative;z-index:10;background:linear-gradient(160deg,var(--brown) 0%,#1c110a 100%);color:rgba(253,250,244,.75);overflow:hidden}
-footer::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0 L80 40 L40 80 L0 40 Z' fill='rgba(200,146,42,0.05)'/%3E%3C/svg%3E") repeat;pointer-events:none}
-.footer-inner{position:relative;max-width:1200px;margin:0 auto;padding:48px 24px 0}
-.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px;margin-bottom:40px}
-.footer-brand h2{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--white);margin-bottom:10px}
-.footer-brand p{font-size:.82rem;line-height:1.7;color:rgba(253,250,244,.6);max-width:300px}
-.footer-col h4{font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold-lite);margin-bottom:14px;font-weight:600}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
-.footer-col ul li a{color:rgba(253,250,244,.6);text-decoration:none;font-size:.82rem;transition:var(--tr);display:inline-flex;align-items:center;gap:6px}
-.footer-col ul li a:hover{color:var(--gold-lite);transform:translateX(3px)}
-.quick-access{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:28px;margin-bottom:28px}
-.qa-title{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold-lite);margin-bottom:18px;font-weight:600}
-.qa-buttons{display:flex;flex-wrap:wrap;gap:10px}
-.qa-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:100px;border:none;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;text-decoration:none;transition:var(--tr)}
-.qa-btn.primary{background:var(--gold);color:var(--brown)}.qa-btn.primary:hover{background:var(--gold-lite);transform:translateY(-2px)}
-.qa-btn.secondary{background:rgba(255,255,255,.08);color:var(--white);border:1px solid rgba(255,255,255,.14)}.qa-btn.secondary:hover{background:rgba(255,255,255,.15);transform:translateY(-2px)}
-.qa-btn.green{background:rgba(45,80,22,.7);color:var(--green-lite);border:1px solid rgba(127,179,71,.25)}.qa-btn.green:hover{background:var(--green-mid);color:var(--white);transform:translateY(-2px)}
-.qa-btn.teal{background:rgba(26,95,106,.6);color:#7dd3dc;border:1px solid rgba(26,95,106,.8)}.qa-btn.teal:hover{background:var(--teal);color:var(--white);transform:translateY(-2px)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.footer-bottom p{font-size:.75rem;color:rgba(253,250,244,.4)}
-.footer-bottom p span{color:var(--gold-lite)}
-.footer-badge{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:.68rem;color:rgba(253,250,244,.35);border:1px solid rgba(255,255,255,.1);padding:4px 10px;border-radius:100px}
+footer{background:linear-gradient(135deg,var(--brown) 0%,#2a1e14 100%);color:rgba(253,250,244,.8);padding:40px 20px 28px;position:relative;z-index:10}
+.footer-inner{max-width:1200px;margin:0 auto;text-align:center}
+.footer-logo{font-size:2.8rem;margin-bottom:12px}
+.footer-title{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--gold-lite);margin-bottom:8px}
+.footer-text{font-size:.82rem;line-height:1.7;margin-bottom:20px;max-width:600px;margin-left:auto;margin-right:auto}
+.footer-links{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.footer-links a{color:rgba(253,250,244,.7);font-size:.82rem;text-decoration:none;transition:var(--tr)}
+.footer-links a:hover{color:var(--gold-lite)}
+.footer-bottom{padding-top:20px;border-top:1px solid rgba(253,250,244,.15);font-size:.75rem;color:rgba(253,250,244,.6)}
 
 /* BACK TO TOP */
-#backToTop{position:fixed;bottom:28px;right:24px;width:46px;height:46px;background:var(--green);color:var(--white);border:none;border-radius:50%;font-size:1.1rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);transition:var(--tr);z-index:999}
-#backToTop.show{opacity:1;transform:translateY(0)}
-#backToTop:hover{background:var(--green-mid)}
+#backToTop{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:linear-gradient(135deg,var(--gold),var(--gold-lite));border:none;border-radius:50%;color:var(--white);font-size:1.3rem;cursor:pointer;box-shadow:0 4px 16px rgba(200,146,42,.4);opacity:0;transform:translateY(20px) scale(.8);transition:var(--tr);z-index:100;display:flex;align-items:center;justify-content:center}
+#backToTop.show{opacity:1;transform:translateY(0) scale(1)}
+#backToTop:hover{transform:translateY(-4px) scale(1.08);box-shadow:0 8px 24px rgba(200,146,42,.6)}
 
-@keyframes fadeDown{from{transform:translateY(-14px);opacity:0}to{transform:translateY(0);opacity:1}}
-.fade-in{animation:fadeUp .6s ease both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(29,20,14,.94);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease;backdrop-filter:blur(8px)}
+.lightbox.active{opacity:1;pointer-events:all}
+.lightbox-content{max-width:90%;max-height:90%;position:relative;animation:lbPop .35s cubic-bezier(.34,1.56,.64,1) both}
+.lightbox-emoji{font-size:clamp(6rem,20vw,16rem);text-align:center;filter:drop-shadow(0 8px 32px rgba(0,0,0,.4))}
+.lightbox-caption{margin-top:24px;text-align:center;font-size:.9rem;color:rgba(253,250,244,.85);line-height:1.6;max-width:500px}
+.lightbox-close{position:absolute;top:20px;right:20px;width:48px;height:48px;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);border-radius:50%;color:var(--white);font-size:1.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr)}
+.lightbox-close:hover{background:rgba(255,255,255,.2);transform:rotate(90deg)}
+@keyframes lbPop{0%{transform:scale(.7);opacity:0}100%{transform:scale(1);opacity:1}}
 
-/* ═══════════ ADMIN PANEL ═══════════ */
-#pinModal{display:none;position:fixed;inset:0;z-index:99999;background:rgba(20,12,5,.93);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:16px}
-#pinModal.active{display:flex}
-.pin-box{background:var(--white);border-radius:var(--r-lg);padding:32px 28px;width:min(340px,100%);text-align:center;box-shadow:0 32px 80px rgba(0,0,0,.5);animation:lbIn .25s ease}
-.pin-box h2{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--brown);margin-bottom:6px}
-.pin-box p{font-size:.82rem;color:var(--brown-lite);margin-bottom:22px}
-.pin-dots{display:flex;justify-content:center;gap:14px;margin-bottom:22px}
-.pin-dot{width:14px;height:14px;border-radius:50%;background:rgba(61,43,31,.15);transition:var(--tr)}
-.pin-dot.filled{background:var(--green)}
-.pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
-.pin-key{background:var(--parchment);border:1px solid rgba(61,43,31,.12);border-radius:var(--r-md);padding:15px;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--brown);cursor:pointer;transition:var(--tr);-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-.pin-key:hover,.pin-key:active{background:var(--gold);color:var(--white)}
-.pin-key.del{font-size:1rem;font-family:'DM Sans',sans-serif}
-.pin-error{font-size:.8rem;color:#c0392b;min-height:20px;margin-bottom:4px}
-.pin-close-btn{background:none;border:none;font-size:.8rem;color:var(--brown-lite);cursor:pointer;text-decoration:underline}
+/* ADMIN BADGE */
+.admin-badge{position:fixed;top:18px;left:18px;z-index:999;background:linear-gradient(135deg,var(--red),#a82828);color:var(--white);padding:8px 16px;border-radius:var(--r-md);font-family:'DM Mono',monospace;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;box-shadow:0 4px 12px rgba(139,32,32,.4);opacity:0;pointer-events:none;transition:var(--tr)}
+.admin-badge.visible{opacity:1;pointer-events:all}
 
-/* Admin Panel Drawer */
-#adminPanel{position:fixed;top:0;right:0;width:min(480px,100vw);height:100vh;height:100dvh;background:#271a10;z-index:88888;transform:translateX(100%);transition:transform .38s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(0,0,0,.5);display:flex;flex-direction:column;overflow:hidden}
-#adminPanel.open{transform:translateX(0)}
-.ap-header{background:linear-gradient(135deg,var(--green),#1a3309);padding:13px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}
-.ap-header h2{font-family:'Playfair Display',serif;color:var(--white);font-size:.92rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ap-hbtns{display:flex;gap:8px;flex-shrink:0}
-.ap-close{background:rgba(255,255,255,.12);border:none;color:var(--white);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;touch-action:manipulation;transition:var(--tr)}
-.ap-close:hover{background:rgba(255,255,255,.28)}
-.ap-logout-btn{background:rgba(139,32,32,.45);border:1px solid rgba(139,32,32,.6);color:#ffb3b3;font-size:.72rem;padding:6px 12px;border-radius:100px;cursor:pointer;font-family:'DM Sans',sans-serif;touch-action:manipulation;transition:var(--tr);white-space:nowrap}
-.ap-logout-btn:hover{background:var(--red);color:#fff}
-.ap-tabs{display:flex;background:rgba(0,0,0,.3);flex-shrink:0;overflow-x:auto}
-.ap-tabs::-webkit-scrollbar{display:none}
-.ap-tab{flex:1;min-width:66px;padding:10px 4px;background:none;border:none;color:rgba(253,250,244,.45);font-family:'DM Sans',sans-serif;font-size:.72rem;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;touch-action:manipulation;transition:var(--tr)}
-.ap-tab.active{color:var(--gold-lite);border-bottom-color:var(--gold-lite);background:rgba(200,146,42,.1)}
+/* ADMIN PANEL */
+.admin-panel{position:fixed;inset:0;z-index:10000;background:rgba(29,20,14,.96);backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .3s ease;overflow:hidden}
+.admin-panel.open{opacity:1;pointer-events:all}
+.ap-container{max-width:1100px;height:100%;margin:0 auto;display:flex;flex-direction:column;animation:apSlide .4s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes apSlide{0%{transform:translateY(40px);opacity:0}100%{transform:translateY(0);opacity:1}}
 
-/* KEY: ap-body must scroll independently */
-.ap-body{flex:1 1 0;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-.ap-body::-webkit-scrollbar{width:4px}
-.ap-body::-webkit-scrollbar-thumb{background:rgba(160,120,80,.5);border-radius:4px}
-.ap-panel{display:none;padding:14px 14px 100px}
+/* AP HEADER */
+.ap-header{background:linear-gradient(135deg,var(--brown),#2a1e14);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.1)}
+.ap-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold-lite);display:flex;align-items:center;gap:12px}
+.ap-actions{display:flex;gap:12px}
+.ap-actions button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--white);padding:8px 16px;border-radius:var(--r-sm);font-size:.82rem;cursor:pointer;transition:var(--tr)}
+.ap-actions button:hover{background:rgba(255,255,255,.18)}
+
+/* AP TABS */
+.ap-tabs{display:flex;gap:8px;padding:16px 24px;background:rgba(61,43,31,.3);border-bottom:1px solid rgba(255,255,255,.08)}
+.ap-tab{background:transparent;border:none;color:rgba(253,250,244,.6);padding:10px 18px;border-radius:var(--r-sm);font-size:.85rem;font-weight:500;cursor:pointer;transition:var(--tr)}
+.ap-tab:hover{background:rgba(255,255,255,.08);color:rgba(253,250,244,.9)}
+.ap-tab.active{background:var(--gold);color:var(--brown);font-weight:600}
+
+/* AP BODY */
+.ap-body{flex:1;overflow-y:auto;padding:28px 24px}
+.ap-panel{display:none}
 .ap-panel.active{display:block}
-.ap-group{margin-bottom:13px}
-.ap-label{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-lite);margin-bottom:5px;font-weight:600}
-.ap-input{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:var(--r-sm);padding:11px 12px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:16px;transition:var(--tr)}
-.ap-input:focus{outline:none;border-color:var(--gold-lite);background:rgba(255,255,255,.12)}
-.ap-input::placeholder{color:rgba(253,250,244,.28)}
-textarea.ap-input{resize:vertical;min-height:70px}
-.ap-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.ap-divider{height:1px;background:rgba(255,255,255,.08);margin:14px 0}
-.ap-section-label{font-size:.7rem;font-weight:600;color:rgba(253,250,244,.5);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.ap-section{background:rgba(253,250,244,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-md);padding:24px;margin-bottom:24px}
+.ap-section h3{font-family:'Playfair Display',serif;color:var(--gold-lite);font-size:1.15rem;margin-bottom:16px}
+.ap-form-group{margin-bottom:16px}
+.ap-form-group label{display:block;color:rgba(253,250,244,.8);font-size:.82rem;margin-bottom:6px;font-weight:500}
+.ap-form-group input,.ap-form-group textarea{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--white);padding:10px 12px;border-radius:var(--r-sm);font-size:.85rem;font-family:'DM Sans',sans-serif}
+.ap-form-group input:focus,.ap-form-group textarea:focus{outline:none;border-color:var(--gold);background:rgba(255,255,255,.12)}
+.ap-form-group textarea{resize:vertical;min-height:80px}
+.ap-form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.ap-btn{background:var(--gold);color:var(--brown);border:none;padding:10px 20px;border-radius:var(--r-sm);font-size:.85rem;font-weight:600;cursor:pointer;transition:var(--tr)}
+.ap-btn:hover{background:var(--gold-lite);transform:translateY(-1px)}
+.ap-btn-sec{background:rgba(255,255,255,.1);color:var(--white);border:1px solid rgba(255,255,255,.2)}
+.ap-btn-sec:hover{background:rgba(255,255,255,.18)}
 
-/* Sticky save footer */
-.ap-form-footer{position:sticky;bottom:0;padding:10px 14px 14px;background:linear-gradient(to top,#271a10 65%,transparent);display:flex;gap:10px;margin:0 -14px}
-.ap-save-btn{flex:1;padding:15px;background:linear-gradient(135deg,var(--green),var(--green-mid));color:var(--white);border:none;border-radius:var(--r-md);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;touch-action:manipulation;min-height:52px;transition:var(--tr)}
-.ap-save-btn:active{opacity:.82}
-.ap-cancel-btn{padding:15px 14px;background:rgba(255,255,255,.08);color:rgba(253,250,244,.7);border:1px solid rgba(255,255,255,.13);border-radius:var(--r-md);font-family:'DM Sans',sans-serif;font-size:.86rem;cursor:pointer;touch-action:manipulation;min-height:52px;white-space:nowrap;transition:var(--tr)}
-.ap-cancel-btn:hover{background:rgba(255,255,255,.15)}
-.ap-add-btn{width:100%;padding:12px;background:rgba(200,146,42,.1);border:1px dashed rgba(200,146,42,.4);border-radius:var(--r-md);color:var(--gold-lite);font-family:'DM Sans',sans-serif;font-size:.84rem;cursor:pointer;transition:var(--tr);margin-bottom:12px;min-height:46px;touch-action:manipulation}
-.ap-add-btn:hover{background:rgba(200,146,42,.2)}
-.ap-list-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-sm);padding:10px 12px;margin-bottom:8px;display:flex;gap:10px;align-items:center}
-.ap-list-body{flex:1;min-width:0}
-.ap-list-body strong{display:block;font-size:.83rem;color:var(--white);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ap-list-body span{font-size:.7rem;color:rgba(253,250,244,.45)}
-.ap-list-actions{display:flex;gap:5px;flex-shrink:0}
-.ap-edit,.ap-del{padding:7px 10px;border:none;border-radius:var(--r-sm);font-size:.72rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;min-height:34px;touch-action:manipulation;transition:var(--tr)}
-.ap-edit{background:rgba(200,146,42,.2);color:var(--gold-lite)}.ap-edit:hover{background:var(--gold);color:var(--brown)}
-.ap-del{background:rgba(139,32,32,.2);color:#ffb3b3}.ap-del:hover{background:var(--red);color:#fff}
+/* AP LIST */
+.ap-list-item{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;gap:14px}
+.ap-list-body{flex:1}
+.ap-list-body strong{display:block;color:var(--white);font-size:.9rem;margin-bottom:4px}
+.ap-list-body span{font-size:.78rem;color:rgba(253,250,244,.65)}
+.ap-list-actions{display:flex;gap:8px}
+.ap-edit,.ap-del{padding:6px 12px;border:none;border-radius:var(--r-sm);font-size:.75rem;cursor:pointer;transition:var(--tr)}
+.ap-edit{background:var(--teal);color:var(--white)}
+.ap-edit:hover{background:#236d7a}
+.ap-del{background:var(--red);color:var(--white)}
+.ap-del:hover{background:#a82828}
 
-#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--green);color:var(--white);padding:10px 24px;border-radius:100px;font-size:.84rem;font-weight:600;z-index:99999;opacity:0;transition:all .3s ease;pointer-events:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-#adminBadge{display:none;position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:88887;background:rgba(200,146,42,.95);color:var(--brown);padding:5px 18px;border-radius:100px;font-size:.72rem;font-weight:700;box-shadow:0 2px 12px rgba(0,0,0,.3);white-space:nowrap}
-#adminBadge.visible{display:flex;align-items:center;gap:6px}
+/* AP FORM POPUP */
+.ap-form-popup{display:none;background:rgba(253,250,244,.08);border:1px solid rgba(255,255,255,.15);border-radius:var(--r-md);padding:24px;margin-top:16px}
+.ap-form-popup h4{color:var(--gold-lite);font-size:1.05rem;margin-bottom:16px}
 
-@media(max-width:900px){.photo-wall{columns:3 180px}.footer-top{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}}
-main section:nth-child(1){animation-delay:.05s}
-main section:nth-child(2){animation-delay:.15s}
-main section:nth-child(3){animation-delay:.25s}
-main section:nth-child(4){animation-delay:.3s}
-main section:nth-child(5){animation-delay:.35s}
-@media(max-width:600px){.header-inner{padding:24px 16px 32px}.header-stats-bar{gap:12px}.stat-chip{padding:8px 14px}.stat-chip .num{font-size:1.2rem}.photo-wall{columns:2 140px;gap:10px}.reports-grid{grid-template-columns:1fr}.dashboard-row{grid-template-columns:1fr 1fr}.footer-top{grid-template-columns:1fr;gap:24px}.qa-buttons{gap:8px}.qa-btn{font-size:.78rem;padding:9px 14px}main{padding:24px 14px 48px}.footer-inner{padding:32px 16px 0}.ap-row2{grid-template-columns:1fr}}
-@media(max-width:400px){.photo-wall{columns:2 120px;gap:8px}.dashboard-row{grid-template-columns:1fr}}
+/* PIN MODAL */
+.pin-modal{position:fixed;inset:0;z-index:20000;background:rgba(29,20,14,.97);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.pin-modal.active{opacity:1;pointer-events:all}
+.pin-box{background:linear-gradient(135deg,rgba(61,43,31,.9),rgba(42,30,20,.9));padding:40px;border-radius:var(--r-lg);text-align:center;border:1px solid rgba(255,255,255,.1);box-shadow:0 12px 48px rgba(0,0,0,.5);max-width:380px;width:90%;animation:pinPop .4s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes pinPop{0%{transform:scale(.85);opacity:0}100%{transform:scale(1);opacity:1}}
+.pin-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--gold-lite);margin-bottom:8px}
+.pin-subtitle{font-size:.82rem;color:rgba(253,250,244,.65);margin-bottom:32px}
+.pin-dots{display:flex;gap:12px;justify-content:center;margin-bottom:28px}
+.pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.3);transition:var(--tr)}
+.pin-dot.filled{background:var(--gold);border-color:var(--gold)}
+.pin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.pin-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--white);padding:16px;border-radius:var(--r-md);font-size:1.3rem;font-weight:600;cursor:pointer;transition:var(--tr)}
+.pin-btn:hover{background:rgba(255,255,255,.15);transform:scale(1.05)}
+.pin-btn:active{transform:scale(.95)}
+.pin-err{color:#ff6b6b;font-size:.8rem;min-height:20px}
+.pin-close{position:absolute;top:20px;right:20px;width:40px;height:40px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:50%;color:var(--white);font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr)}
+.pin-close:hover{background:rgba(255,255,255,.15);transform:rotate(90deg)}
+
+/* TOAST */
+.toast{position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--green),var(--green-mid));color:var(--white);padding:14px 24px;border-radius:var(--r-md);font-size:.85rem;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:30000;transition:bottom .4s cubic-bezier(.34,1.56,.64,1);white-space:nowrap}
+.toast.show{bottom:32px}
+
+/* ANIMATIONS */
+@keyframes fadeDown{0%{opacity:0;transform:translateY(-12px)}100%{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .header-stats-bar{gap:12px}
+  .stat-chip{padding:8px 14px}
+  .stat-chip .num{font-size:1.2rem}
+  .photo-wall{columns:2 200px}
+  .reports-grid{grid-template-columns:1fr}
+  .dashboard-row{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+  .ap-tabs{flex-wrap:wrap}
+  .ap-form-row{grid-template-columns:1fr}
+}
+
+/* Media Link Buttons */
+.media-links {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.media-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(200,146,42,.15);
+  border: 1px solid rgba(200,146,42,.3);
+  border-radius: var(--r-sm);
+  color: var(--brown);
+  text-decoration: none;
+  font-size: .75rem;
+  font-weight: 500;
+  transition: var(--tr);
+}
+
+.media-link-btn:hover {
+  background: rgba(200,146,42,.25);
+  border-color: rgba(200,146,42,.5);
+  transform: translateY(-1px);
+}
+
+.media-link-btn span {
+  font-size: 1rem;
+}
 </style>
 </head>
 <body>
 
-<header role="banner">
-  <button id="adminTrigger" aria-hidden="true" tabindex="-1"></button>
+<button id="adminTrigger" aria-label="Admin Access"></button>
+
+<div class="admin-badge" id="adminBadge">🔒 Mode Admin Aktif</div>
+
+<header>
   <div class="header-inner">
-    <div class="header-badge">🇮🇩 &nbsp; Kalurahan Kedungsari &nbsp;·&nbsp; Pemerintahan Desa</div>
+    <div class="header-badge">📊 Open Data Portal</div>
     <div class="header-logo">🏛️</div>
-    <h1 class="header-title">Rumah Data<span>Kependudukan</span></h1>
-    <p class="header-subtitle">Pusat informasi data kependudukan, demografi, dan layanan administrasi warga Kalurahan Kedungsari yang transparan, terbuka, dan mudah diakses.</p>
+    <h1 class="header-title">
+      Rumah Data Kependudukan
+      <span>Kalurahan Kedungsari</span>
+    </h1>
+    <p class="header-subtitle">
+      Pusat informasi data kependudukan, demografi, dan layanan administrasi warga yang transparan, terbuka, dan mudah diakses oleh seluruh masyarakat.
+    </p>
     <div class="header-stats-bar">
-      <div class="stat-chip"><span class="num" id="hP">3.847</span><span class="label">Total Penduduk</span></div>
-      <div class="stat-chip"><span class="num" id="hK">1.142</span><span class="label">Kepala Keluarga</span></div>
-      <div class="stat-chip"><span class="num" id="hD">5</span><span class="label">Dusun</span></div>
-      <div class="stat-chip"><span class="num" id="hT">2025</span><span class="label">Tahun Data</span></div>
+      <div class="stat-chip">
+        <span class="num" id="hPenduduk">—</span>
+        <span class="label">Penduduk</span>
+      </div>
+      <div class="stat-chip">
+        <span class="num" id="hKK">—</span>
+        <span class="label">Kepala Keluarga</span>
+      </div>
+      <div class="stat-chip">
+        <span class="num" id="hDusun">—</span>
+        <span class="label">Dusun</span>
+      </div>
     </div>
   </div>
 </header>
 
-<div class="ticker-bar" aria-hidden="true">
-  <div class="ticker-content">
-    <span>📅 Data diperbarui: <span id="tk1">Januari 2025</span></span>
-    <span>👥 Laki-laki: <span id="tk2">1.921</span> | Perempuan: <span id="tk3">1.926</span></span>
-    <span>📊 Kepadatan: <span id="tk4">485</span> jiwa/km²</span>
-    <span>🎓 Melek Huruf: <span id="tk5">98,4</span>%</span>
-    <span>💼 Partisipasi Kerja: <span id="tk6">72,1</span>%</span>
-    <span>📅 Data diperbarui: <span id="tk1b">Januari 2025</span></span>
-    <span>👥 Laki-laki: <span id="tk2b">1.921</span> | Perempuan: <span id="tk3b">1.926</span></span>
-    <span>📊 Kepadatan: <span id="tk4b">485</span> jiwa/km²</span>
-    <span>🎓 Melek Huruf: <span id="tk5b">98,4</span>%</span>
-    <span>💼 Partisipasi Kerja: <span id="tk6b">72,1</span>%</span>
+<div class="ticker-bar">
+  <div class="ticker-content" id="tickerContent">
+    <span>📍 Kalurahan Kedungsari, Kapanewon Pengasih, Kabupaten Kulon Progo, Yogyakarta</span>
+    <span>📞 Hubungi kami untuk informasi lebih lanjut</span>
+    <span>🌐 Data terbuka untuk transparansi dan partisipasi masyarakat</span>
+    <span>📍 Kalurahan Kedungsari, Kapanewon Pengasih, Kabupaten Kulon Progo, Yogyakarta</span>
+    <span>📞 Hubungi kami untuk informasi lebih lanjut</span>
+    <span>🌐 Data terbuka untuk transparansi dan partisipasi masyarakat</span>
   </div>
 </div>
 
-<main id="main">
-  <section class="fade-in">
-    <div class="section-header"><h2 class="section-title">📈 Statistik Kependudukan</h2><div class="section-line"></div><span class="section-tag">Live Data</span></div>
+<main>
+  <!-- DASHBOARD STATISTIK -->
+  <section id="statistik" class="section-stagger">
+    <div class="section-header">
+      <h2 class="section-title">📊 Statistik Kependudukan</h2>
+      <div class="section-line"></div>
+      <span class="section-tag" id="tahunData">Tahun 2024</span>
+    </div>
     <div class="dashboard-row">
-      <div class="dash-card dc-green" data-emoji="👨"><div class="dc-label">Penduduk Laki-laki</div><div class="dc-value" id="d1">1.921</div><div class="dc-sub" id="d1s">49,9% dari total</div></div>
-      <div class="dash-card dc-red"   data-emoji="👩"><div class="dc-label">Penduduk Perempuan</div><div class="dc-value" id="d2">1.926</div><div class="dc-sub" id="d2s">50,1% dari total</div></div>
-      <div class="dash-card dc-gold"  data-emoji="🧒"><div class="dc-label">Usia 0–14 tahun</div><div class="dc-value" id="d3">812</div><div class="dc-sub" id="d3s">21,1% dari total</div></div>
-      <div class="dash-card dc-teal"  data-emoji="👴"><div class="dc-label">Usia 60+ tahun</div><div class="dc-value" id="d4">348</div><div class="dc-sub" id="d4s">9,0% dari total</div></div>
-      <div class="dash-card dc-green" data-emoji="💍"><div class="dc-label">Status Kawin</div><div class="dc-value" id="d5">2.104</div><div class="dc-sub" id="d5s">warga berstatus menikah</div></div>
-      <div class="dash-card dc-gold"  data-emoji="🎓"><div class="dc-label">Lulus SMA/SMK</div><div class="dc-value" id="d6">1.238</div><div class="dc-sub" id="d6s">pendidikan terakhir</div></div>
+      <div class="dash-card dc-green" data-emoji="👨">
+        <div class="dc-label">Laki-laki</div>
+        <div class="dc-value" id="d1Val">—</div>
+        <div class="dc-sub" id="d1Sub">—</div>
+      </div>
+      <div class="dash-card dc-green" data-emoji="👩">
+        <div class="dc-label">Perempuan</div>
+        <div class="dc-value" id="d2Val">—</div>
+        <div class="dc-sub" id="d2Sub">—</div>
+      </div>
+      <div class="dash-card dc-gold" data-emoji="👶">
+        <div class="dc-label">Usia 0-17 Tahun</div>
+        <div class="dc-value" id="d3Val">—</div>
+        <div class="dc-sub" id="d3Sub">—</div>
+      </div>
+      <div class="dash-card dc-gold" data-emoji="👔">
+        <div class="dc-label">Usia 18-59 Tahun</div>
+        <div class="dc-value" id="d4Val">—</div>
+        <div class="dc-sub" id="d4Sub">—</div>
+      </div>
+      <div class="dash-card dc-red" data-emoji="👴">
+        <div class="dc-label">Usia 60+ Tahun</div>
+        <div class="dc-value" id="d5Val">—</div>
+        <div class="dc-sub" id="d5Sub">—</div>
+      </div>
+      <div class="dash-card dc-teal" data-emoji="🎓">
+        <div class="dc-label">Pendidikan Tinggi</div>
+        <div class="dc-value" id="d6Val">—</div>
+        <div class="dc-sub" id="d6Sub">—</div>
+      </div>
     </div>
   </section>
 
-  <section id="foto" class="fade-in">
-    <div class="section-header"><h2 class="section-title">🖼️ Dinding Foto</h2><div class="section-line"></div><span class="section-tag">Klik untuk Perbesar</span></div>
-    <div class="photo-wall">
-      <div class="photo-frame" onclick="openLB('🏛️','Balai Kalurahan','...')">
+  <!-- PHOTO WALL -->
+  <section id="foto" class="section-stagger">
+    <div class="section-header">
+      <h2 class="section-title">📸 Dinding Foto & Dokumentasi</h2>
+      <div class="section-line"></div>
+      <span class="section-tag">Galeri Visual</span>
+    </div>
+    <div class="media-links">
+      <a href="https://github.com/KDMP-Kedungsari/rumah-data/tree/main/assets/foto" target="_blank" class="media-link-btn">
+        <span>📁</span> Upload Foto
+      </a>
+      <a href="https://github.com/KDMP-Kedungsari/rumah-data/tree/main/assets/video" target="_blank" class="media-link-btn">
+        <span>🎥</span> Upload Video
+      </a>
+    </div>
+    <div class="photo-wall" id="photoWall">
+      <div class="photo-frame" onclick="openLB('📸','Galeri Foto','Tambahkan foto dokumentasi kegiatan di sini')">
         <div class="emoji-frame">
-          <span class="big-emoji">🏛️</span>
+          <div class="big-emoji">📸</div>
+          <div class="frame-caption">Klik untuk melihat foto</div>
         </div>
       </div>
-      
-      <div class="photo-frame" onclick="openLB('🏛️','Balai Kalurahan','...')">
-        <img src="images/balai-desa.jfif" alt="Balai Desa" style="width:100%; display:block; height:200px; object-fit:cover;">
+      <div class="photo-frame frame-tall" onclick="openLB('🎯','Kegiatan Masyarakat','Dokumentasi berbagai kegiatan warga')">
+        <div class="emoji-frame">
+          <div class="big-emoji">🎯</div>
+          <div class="frame-caption">Kegiatan warga</div>
+        </div>
       </div>
-      
-      <div class="photo-frame frame-tall" onclick="openLB('🤝','Musyawarah Kalurahan','Musrenbang perencanaan pembangunan warga')"><div class="emoji-frame"><span class="big-emoji">🤝</span><span class="frame-caption">Musyawarah Perencanaan</span></div><div class="frame-label"><strong>Musrenbang 2025</strong><span>Maret 2025</span></div></div>
-      <div class="photo-frame" onclick="openLB('👶','Kegiatan Posyandu','Pemeriksaan rutin balita dan ibu hamil')"><div class="emoji-frame"><span class="big-emoji">👶</span><span class="frame-caption">Posyandu Balita</span></div><div class="frame-label"><strong>Posyandu Aktif</strong><span>4 pos tersebar</span></div></div>
-      <div class="photo-frame" onclick="openLB('🛠️','Gotong Royong','Kebersihan lingkungan bersama warga')"><div class="emoji-frame"><span class="big-emoji">🛠️</span><span class="frame-caption">Gotong Royong Rutin</span></div><div class="frame-label"><strong>Kerja Bakti</strong><span>Setiap Minggu Ke-3</span></div></div>
-      <div class="photo-frame frame-tall" onclick="openLB('🗺️','Peta Wilayah','Pemetaan wilayah dan batas administrasi')"><div class="emoji-frame"><span class="big-emoji">🗺️</span><span class="frame-caption">Peta Wilayah</span></div><div class="frame-label"><strong>Peta Desa</strong><span>5 Dusun</span></div></div>
-      <div class="photo-frame" onclick="openLB('🏫','Sarana Pendidikan','SD, SMP, dan PAUD di wilayah kalurahan')"><div class="emoji-frame"><span class="big-emoji">🏫</span><span class="frame-caption">Sarana Pendidikan</span></div><div class="frame-label"><strong>Sekolah & PAUD</strong><span>3 unit pendidikan</span></div></div>
-      <div class="photo-frame" onclick="openLB('🪪','Pelayanan KTP','Layanan pembuatan dan perpanjangan KTP')"><div class="emoji-frame"><span class="big-emoji">🪪</span><span class="frame-caption">Layanan KTP & KK</span></div><div class="frame-label"><strong>Adminduk Online</strong><span>Senin – Jumat</span></div></div>
-      <div class="photo-frame frame-tall" onclick="openLB('🌾','Lahan Pertanian','Lahan pertanian produktif kalurahan')"><div class="emoji-frame"><span class="big-emoji">🌾</span><span class="frame-caption">Lahan Pertanian Desa</span></div><div class="frame-label"><strong>Pertanian Aktif</strong><span>±12 ha lahan produktif</span></div></div>
-      <div class="photo-frame" onclick="openLB('🛒','UMKM Warga','Pameran dan pemberdayaan UMKM lokal')"><div class="emoji-frame"><span class="big-emoji">🛒</span><span class="frame-caption">UMKM Kalurahan</span></div><div class="frame-label"><strong>85 UMKM Aktif</strong><span>Berbagai sektor usaha</span></div></div>
-      <div class="photo-frame" onclick="openLB('⚽','Karang Taruna','Kegiatan kepemudaan dan olahraga')"><div class="emoji-frame"><span class="big-emoji">⚽</span><span class="frame-caption">Karang Taruna</span></div><div class="frame-label"><strong>Karang Taruna</strong><span>Kegiatan Kepemudaan</span></div></div>
-      <div class="photo-frame frame-tall" onclick="openLB('🕌','Sarana Ibadah','Masjid dan mushola pusat kegiatan keagamaan')"><div class="emoji-frame"><span class="big-emoji">🕌</span><span class="frame-caption">Sarana Ibadah</span></div><div class="frame-label"><strong>7 Masjid/Mushola</strong><span>Tiap dusun</span></div></div>
-      <div class="photo-frame" onclick="openLB('💰','BUMKal Kedungsari','Badan Usaha Milik Kalurahan')"><div class="emoji-frame"><span class="big-emoji">💰</span><span class="frame-caption">BUMKal Kedungsari</span></div><div class="frame-label"><strong>BUMKal Aktif</strong><span>Pengelola Aset Desa</span></div></div>
+      <div class="photo-frame" onclick="openLB('🌾','Pertanian','Aktivitas pertanian di Kalurahan')">
+        <div class="emoji-frame">
+          <div class="big-emoji">🌾</div>
+          <div class="frame-caption">Sektor pertanian</div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="laporan" class="fade-in">
-    <div class="section-header"><h2 class="section-title">📋 Laporan & Dokumen</h2><div class="section-line"></div><span class="section-tag">Unduh</span></div>
-    <div class="reports-grid" id="reportsGrid"></div>
+  <!-- REPORTS -->
+  <section id="laporan" class="section-stagger">
+    <div class="section-header">
+      <h2 class="section-title">📄 Laporan dan Dokumen</h2>
+      <div class="section-line"></div>
+      <span class="section-tag">Arsip Digital</span>
+    </div>
+    <div class="media-links">
+      <a href="https://github.com/KDMP-Kedungsari/rumah-data/tree/main/assets/foto-laporan" target="_blank" class="media-link-btn">
+        <span>📁</span> Upload Foto
+      </a>
+      <a href="https://github.com/KDMP-Kedungsari/rumah-data/tree/main/assets/video-laporan" target="_blank" class="media-link-btn">
+        <span>🎥</span> Upload Video
+      </a>
+    </div>
+    <div class="reports-grid" id="reportsGrid">
+      <div class="report-card">
+        <div class="report-icon">📊</div>
+        <h3>Laporan Bulanan</h3>
+        <p>Laporan kependudukan dan kegiatan bulanan Kalurahan</p>
+        <span class="report-tag">Data Kependudukan</span>
+        <button class="report-btn">Lihat Laporan</button>
+      </div>
+    </div>
   </section>
 
-  <section id="kegiatan" class="fade-in">
-    <div class="section-header"><h2 class="section-title">🎉 Kegiatan Kalurahan</h2><div class="section-line"></div><span class="section-tag">Terbaru</span></div>
-    <div class="kegiatan-strip" id="kegiatanStrip"></div>
-  </section>
-
-  <section id="pengumuman" class="fade-in">
-    <div class="section-header"><h2 class="section-title">📢 Pengumuman</h2><div class="section-line"></div><span class="section-tag">Terkini</span></div>
-    <div class="pengumuman-list" id="pengumumanList"></div>
+  <!-- ACTIVITIES -->
+  <section id="kegiatan" class="section-stagger">
+    <div class="section-header">
+      <h2 class="section-title">🎉 Kegiatan Kalurahan</h2>
+      <div class="section-line"></div>
+      <span class="section-tag">Update Terkini</span>
+    </div>
+    <div class="media-links">
+      <a href="https://github.com/KDMP-Kedungsari/rumah-data/tree/main/assets/foto-kegiatan" target="_blank" class="media-link-btn">
+        <span>📁</span> Upload Foto
+      </a>
+      <a href="https://github.com/KDMP-Kedungsari/rumah-data/tree/main/assets/video-kegiatan" target="_blank" class="media-link-btn">
+        <span>🎥</span> Upload Video
+      </a>
+    </div>
+    <div class="activities-list" id="activitiesList">
+      <div class="activity-item">
+        <div class="activity-emoji">🎊</div>
+        <div class="activity-body">
+          <strong>Contoh Kegiatan</strong>
+          <span>Deskripsi singkat kegiatan yang dilaksanakan</span>
+        </div>
+      </div>
+    </div>
   </section>
 </main>
 
-<footer id="kontak">
+<footer>
   <div class="footer-inner">
-    <div class="quick-access">
-      <div class="qa-title">⚡ Akses Cepat &amp; Layanan</div>
-      <div class="qa-buttons">
-        <a href="https://script.google.com/macros/s/AKfycbzRQDPmkLAgwrVKdbbsVum-HTEQUqqzGTlNiqZnJxC4kj0Fg4aQXLI63GhzWNQhjEfR/exec" class="qa-btn primary">📊 Laporan Data</a>
-        <a href="#foto" class="qa-btn secondary">🖼️ Galeri Foto</a>
-        <a href="#pengumuman" class="qa-btn secondary">📢 Pengumuman</a>
-        <a href="#kegiatan" class="qa-btn secondary">🎉 Kegiatan</a>
-        <a href="https://dukcapil.jogjaprov.go.id/" target="_blank" rel="noopener" class="qa-btn green">🪪 Adminduk Online</a>
-        <a href="https://sid.kemendesa.go.id/" target="_blank" rel="noopener" class="qa-btn green">🗂️ SID Kemendes</a>
-        <a href="https://wa.me/628123456789" target="_blank" rel="noopener" class="qa-btn teal">💬 WhatsApp Desa</a>
-        <a href="mailto:kedungsari@desa.id" class="qa-btn teal">✉️ Surel Kalurahan</a>
-      </div>
-    </div>
-    <div class="footer-top">
-      <div class="footer-brand">
-        <h2>🏛️ Rumah Data Kependudukan<br>Kalurahan Kedungsari</h2>
-        <p>Kami berkomitmen menyajikan data kependudukan yang akurat, transparan, dan mudah diakses demi terwujudnya pemerintahan desa yang bersih dan melayani.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Navigasi</h4>
-        <ul>
-          <li><a href="#">🏠 Beranda</a></li>
-          <li><a href="#foto">🖼️ Galeri Foto</a></li>
-          <li><a href="#laporan">📋 Laporan</a></li>
-          <li><a href="#kegiatan">🎉 Kegiatan</a></li>
-          <li><a href="#pengumuman">📢 Pengumuman</a></li>
-          <li><a href="#kontak">📍 Kontak</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Info Kontak</h4>
-        <ul>
-          <li><a href="#">📍 Jl. Raya Kedungsari No.1, Yogyakarta</a></li>
-          <li><a href="tel:+6274123456">📞 (0274) 123-4567</a></li>
-          <li><a href="mailto:kedungsari@desa.id">✉️ kedungsari@desa.id</a></li>
-          <li><a href="#">🕐 Senin–Kamis, 08.00–14.00</a></li>
-          <li><a href="#">🌐 kalurahan-kedungsari.github.io</a></li>
-        </ul>
-      </div>
+    <div class="footer-logo">🏛️</div>
+    <h3 class="footer-title">Kalurahan Kedungsari</h3>
+    <p class="footer-text">
+      Rumah Data Kependudukan merupakan platform transparansi dan keterbukaan informasi publik Kalurahan Kedungsari, Kapanewon Pengasih, Kabupaten Kulon Progo, Daerah Istimewa Yogyakarta.
+    </p>
+    <div class="footer-links">
+      <a href="#statistik">Statistik</a>
+      <a href="#foto">Galeri</a>
+      <a href="#laporan">Laporan</a>
+      <a href="#kegiatan">Kegiatan</a>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 Kalurahan Kedungsari · Dibuat dengan ❤️ untuk <span>transparansi data</span> desa</p>
-      <div class="footer-badge">🇮🇩 &nbsp; Open Data &nbsp;·&nbsp; v2.1</div>
+      © <span id="footerYear">2024</span> Kalurahan Kedungsari. Data untuk transparansi dan partisipasi masyarakat.
     </div>
   </div>
 </footer>
 
 <button id="backToTop" aria-label="Kembali ke atas">↑</button>
 
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLB(event)">
-  <div class="lightbox-inner">
-    <button class="lightbox-close" onclick="closeLB()">✕</button>
-    <div class="lightbox-emoji-big">
-      <span id="lbEmoji"></span>
-      <p id="lbCaption"></p>
-    </div>
+  <button class="lightbox-close" onclick="closeLB(event)">×</button>
+  <div class="lightbox-content">
+    <div class="lightbox-emoji" id="lbEmoji">📸</div>
+    <div class="lightbox-caption" id="lbCaption"></div>
   </div>
 </div>
 
-<div id="adminBadge">⚙️ Mode Admin Aktif</div>
-<div id="toast"></div>
-
-<div id="pinModal" role="dialog" aria-modal="true">
+<!-- PIN MODAL -->
+<div class="pin-modal" id="pinModal">
   <div class="pin-box">
-    <h2>🔐 Admin Panel</h2>
-    <p>Masukkan PIN 4 digit untuk masuk</p>
+    <button class="pin-close" onclick="closePIN()">×</button>
+    <div class="pin-title">🔐 Akses Admin</div>
+    <div class="pin-subtitle">Masukkan PIN 4 digit</div>
     <div class="pin-dots">
-      <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
-      <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
+      <div class="pin-dot" id="pd0"></div>
+      <div class="pin-dot" id="pd1"></div>
+      <div class="pin-dot" id="pd2"></div>
+      <div class="pin-dot" id="pd3"></div>
     </div>
-    <div class="pin-pad">
-      <button class="pin-key" onclick="pk('1')">1</button>
-      <button class="pin-key" onclick="pk('2')">2</button>
-      <button class="pin-key" onclick="pk('3')">3</button>
-      <button class="pin-key" onclick="pk('4')">4</button>
-      <button class="pin-key" onclick="pk('5')">5</button>
-      <button class="pin-key" onclick="pk('6')">6</button>
-      <button class="pin-key" onclick="pk('7')">7</button>
-      <button class="pin-key" onclick="pk('8')">8</button>
-      <button class="pin-key" onclick="pk('9')">9</button>
-      <button class="pin-key del" onclick="pk('clr')">Hapus</button>
-      <button class="pin-key" onclick="pk('0')">0</button>
-      <button class="pin-key del" onclick="pk('back')">⌫</button>
+    <div class="pin-grid">
+      <button class="pin-btn" onclick="pk('1')">1</button>
+      <button class="pin-btn" onclick="pk('2')">2</button>
+      <button class="pin-btn" onclick="pk('3')">3</button>
+      <button class="pin-btn" onclick="pk('4')">4</button>
+      <button class="pin-btn" onclick="pk('5')">5</button>
+      <button class="pin-btn" onclick="pk('6')">6</button>
+      <button class="pin-btn" onclick="pk('7')">7</button>
+      <button class="pin-btn" onclick="pk('8')">8</button>
+      <button class="pin-btn" onclick="pk('9')">9</button>
+      <button class="pin-btn" onclick="pk('clr')">↺</button>
+      <button class="pin-btn" onclick="pk('0')">0</button>
+      <button class="pin-btn" onclick="pk('back')">⌫</button>
     </div>
-    <div class="pin-error" id="pinErr"></div>
-    <button class="pin-close-btn" onclick="closePIN()">Batal</button>
+    <div class="pin-err" id="pinErr"></div>
   </div>
 </div>
 
-<div id="adminPanel">
-  <div class="ap-header">
-    <h2>⚙️ Panel Pengelola Data</h2>
-    <div class="ap-hbtns">
-      <button class="ap-logout-btn" onclick="adminLogout()">Keluar</button>
-      <button class="ap-close" onclick="closeAdmin()">✕</button>
-    </div>
-  </div>
-  <div class="ap-tabs">
-    <button class="ap-tab active" onclick="swTab('statistik',this)">📊 Statistik</button>
-    <button class="ap-tab" onclick="swTab('pengumuman',this)">📢 Pengumuman</button>
-    <button class="ap-tab" onclick="swTab('laporan',this)">📋 Laporan</button>
-    <button class="ap-tab" onclick="swTab('kegiatan',this)">🎉 Kegiatan</button>
-  </div>
-  <div class="ap-body">
-
-    <div class="ap-panel active" id="tab-statistik">
-      <div class="ap-section-label">Header Utama</div>
-      <div class="ap-row2">
-        <div class="ap-group"><label class="ap-label">Total Penduduk</label><input class="ap-input" id="f_p" type="text" inputmode="numeric"></div>
-        <div class="ap-group"><label class="ap-label">Total KK</label><input class="ap-input" id="f_kk" type="text" inputmode="numeric"></div>
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+  <div class="ap-container">
+    <div class="ap-header">
+      <div class="ap-title">
+        <span>⚙️</span> Panel Admin
       </div>
-      <div class="ap-row2">
-        <div class="ap-group"><label class="ap-label">Jumlah Dusun</label><input class="ap-input" id="f_ds" type="text" inputmode="numeric"></div>
-        <div class="ap-group"><label class="ap-label">Tahun Data</label><input class="ap-input" id="f_thn" type="text" inputmode="numeric"></div>
-      </div>
-      <div class="ap-divider"></div>
-      <div class="ap-section-label">Kartu Dashboard</div>
-      <div class="ap-row2">
-        <div class="ap-group"><label class="ap-label">Laki-laki</label><input class="ap-input" id="f_d1" type="text"></div>
-        <div class="ap-group"><label class="ap-label">Keterangan</label><input class="ap-input" id="f_d1s" type="text"></div>
-      </div>
-      <div class="ap-row2">
-        <div class="ap-group"><label class="ap-label">Perempuan</label><input class="ap-input" id="f_d2" type="text"></div>
-        <div class="ap-group"><label class="ap-label">Keterangan</label><input class="ap-input" id="f_d2s" type="text"></div>
-      </div>
-      <div class="ap-row2">
-        <div class="ap-group"><label class="ap-label">Usia 0–14 th</label><input class="ap-input" id="f_d3" type="text"></div>
-        <div class="ap-group"><label class="ap-label">Keterangan</label><input class="ap-input" id="f_d3s" type="text"></div>
-      </div>
-      <div class="ap-row2">
-        <div class="ap-group"><label class="ap-label">Usia 60+ th</label><input class="ap-input" id="f_d4" type="text"></div>
-        <div class="ap-group"><label class="ap-label">Keterangan</label><input class="ap-input" id="f_d4s" type="text"></div>
-      </div>
-      <div class="ap-row2">
-        <div class="ap-group"><label class="ap-label">Status Kawin</label><input class="ap-input" id="f_d5" type="text"></div>
-        <div class="ap-group"><label class="ap-label">Keterangan</label><input class="ap-input" id="f_d5s" type="text"></div>
-      </div>
-      <div class="ap-row2">
-        <div class="ap-group"><label class="ap-label">Lulus SMA/SMK</label><input class="ap-input" id="f_d6" type="text"></div>
-        <div class="ap-group"><label class="ap-label">Keterangan</label><input class="ap-input" id="f_d6s" type="text"></div>
-      </div>
-      <div class="ap-divider"></div>
-      <div class="ap-section-label">Ticker Berjalan</div>
-      <div class="ap-group"><label class="ap-label">Tanggal Pembaruan</label><input class="ap-input" id="f_tk1" type="text"></div>
-      <div class="ap-row2">
-        <div class="ap-group"><label class="ap-label">Laki-laki</label><input class="ap-input" id="f_tk2" type="text"></div>
-        <div class="ap-group"><label class="ap-label">Perempuan</label><input class="ap-input" id="f_tk3" type="text"></div>
-      </div>
-      <div class="ap-row2">
-        <div class="ap-group"><label class="ap-label">Kepadatan /km²</label><input class="ap-input" id="f_tk4" type="text"></div>
-        <div class="ap-group"><label class="ap-label">Melek Huruf %</label><input class="ap-input" id="f_tk5" type="text"></div>
-      </div>
-      <div class="ap-group"><label class="ap-label">Partisipasi Kerja %</label><input class="ap-input" id="f_tk6" type="text"></div>
-      <div class="ap-form-footer">
-        <button class="ap-save-btn" onclick="saveStat()">💾 Simpan Semua</button>
+      <div class="ap-actions">
+        <button onclick="adminLogout()">Keluar</button>
+        <button onclick="closeAdmin()">Tutup Panel</button>
       </div>
     </div>
 
-    <div class="ap-panel" id="tab-pengumuman">
-      <button class="ap-add-btn" onclick="addP()">＋ Tambah Pengumuman</button>
-      <div id="pList"></div>
-      <div id="pForm" style="display:none">
-        <div class="ap-divider"></div>
-        <div class="ap-section-label" id="pLbl">Tambah Pengumuman</div>
-        <input type="hidden" id="pIdx" value="-1">
-        <div class="ap-row2">
-          <div class="ap-group"><label class="ap-label">Emoji</label><input class="ap-input" id="pE" type="text" placeholder="📣" maxlength="4"></div>
-          <div class="ap-group"><label class="ap-label">Tanggal</label><input class="ap-input" id="pT" type="text" placeholder="06 Jan 2025"></div>
+    <div class="ap-tabs">
+      <button class="ap-tab active" onclick="swTab('stat',this)">📊 Statistik</button>
+      <button class="ap-tab" onclick="swTab('lap',this)">📄 Laporan</button>
+      <button class="ap-tab" onclick="swTab('keg',this)">🎉 Kegiatan</button>
+    </div>
+
+    <div class="ap-body">
+      <!-- TAB STATISTIK -->
+      <div class="ap-panel active" id="tab-stat">
+        <div class="ap-section">
+          <h3>Data Umum</h3>
+          <div class="ap-form-row">
+            <div class="ap-form-group">
+              <label>Jumlah Penduduk</label>
+              <input type="text" id="f_p" placeholder="mis. 5.234">
+            </div>
+            <div class="ap-form-group">
+              <label>Jumlah KK</label>
+              <input type="text" id="f_kk" placeholder="mis. 1.456">
+            </div>
+            <div class="ap-form-group">
+              <label>Jumlah Dusun</label>
+              <input type="text" id="f_ds" placeholder="mis. 12">
+            </div>
+            <div class="ap-form-group">
+              <label>Tahun Data</label>
+              <input type="text" id="f_thn" placeholder="mis. 2024">
+            </div>
+          </div>
         </div>
-        <div class="ap-group"><label class="ap-label">Judul</label><input class="ap-input" id="pJ" type="text" placeholder="Judul pengumuman..."></div>
-        <div class="ap-group"><label class="ap-label">Isi</label><textarea class="ap-input" id="pI" rows="3" placeholder="Deskripsi..."></textarea></div>
-        <div class="ap-form-footer">
-          <button class="ap-save-btn" onclick="saveP()">💾 Simpan</button>
-          <button class="ap-cancel-btn" onclick="cancelP()">Batal</button>
+
+        <div class="ap-section">
+          <h3>Data Detail</h3>
+          <div class="ap-form-row">
+            <div class="ap-form-group">
+              <label>Laki-laki (Jumlah)</label>
+              <input type="text" id="f_d1" placeholder="mis. 2.600">
+            </div>
+            <div class="ap-form-group">
+              <label>Laki-laki (Sub-label)</label>
+              <input type="text" id="f_d1s" placeholder="mis. 49.7% dari total">
+            </div>
+          </div>
+          <div class="ap-form-row">
+            <div class="ap-form-group">
+              <label>Perempuan (Jumlah)</label>
+              <input type="text" id="f_d2" placeholder="mis. 2.634">
+            </div>
+            <div class="ap-form-group">
+              <label>Perempuan (Sub-label)</label>
+              <input type="text" id="f_d2s" placeholder="mis. 50.3% dari total">
+            </div>
+          </div>
+          <div class="ap-form-row">
+            <div class="ap-form-group">
+              <label>Usia 0-17 (Jumlah)</label>
+              <input type="text" id="f_d3">
+            </div>
+            <div class="ap-form-group">
+              <label>Usia 0-17 (Sub)</label>
+              <input type="text" id="f_d3s">
+            </div>
+          </div>
+          <div class="ap-form-row">
+            <div class="ap-form-group">
+              <label>Usia 18-59 (Jumlah)</label>
+              <input type="text" id="f_d4">
+            </div>
+            <div class="ap-form-group">
+              <label>Usia 18-59 (Sub)</label>
+              <input type="text" id="f_d4s">
+            </div>
+          </div>
+          <div class="ap-form-row">
+            <div class="ap-form-group">
+              <label>Usia 60+ (Jumlah)</label>
+              <input type="text" id="f_d5">
+            </div>
+            <div class="ap-form-group">
+              <label>Usia 60+ (Sub)</label>
+              <input type="text" id="f_d5s">
+            </div>
+          </div>
+          <div class="ap-form-row">
+            <div class="ap-form-group">
+              <label>Pendidikan Tinggi (Jumlah)</label>
+              <input type="text" id="f_d6">
+            </div>
+            <div class="ap-form-group">
+              <label>Pendidikan Tinggi (Sub)</label>
+              <input type="text" id="f_d6s">
+            </div>
+          </div>
+        </div>
+
+        <div class="ap-section">
+          <h3>Ticker (6 item)</h3>
+          <div class="ap-form-group">
+            <label>Item 1</label>
+            <input type="text" id="f_tk1" placeholder="mis. 📍 Alamat kalurahan">
+          </div>
+          <div class="ap-form-group">
+            <label>Item 2</label>
+            <input type="text" id="f_tk2">
+          </div>
+          <div class="ap-form-group">
+            <label>Item 3</label>
+            <input type="text" id="f_tk3">
+          </div>
+          <div class="ap-form-group">
+            <label>Item 4</label>
+            <input type="text" id="f_tk4">
+          </div>
+          <div class="ap-form-group">
+            <label>Item 5</label>
+            <input type="text" id="f_tk5">
+          </div>
+          <div class="ap-form-group">
+            <label>Item 6</label>
+            <input type="text" id="f_tk6">
+          </div>
+        </div>
+
+        <button class="ap-btn" onclick="saveStat()">💾 Simpan Semua Statistik</button>
+      </div>
+
+      <!-- TAB LAPORAN -->
+      <div class="ap-panel" id="tab-lap">
+        <div class="ap-section">
+          <h3>Daftar Laporan</h3>
+          <div id="lList"></div>
+          <button class="ap-btn" onclick="addL()" style="margin-top:12px">+ Tambah Laporan</button>
+        </div>
+
+        <div class="ap-form-popup" id="lForm">
+          <h4 id="lLbl">Tambah Laporan</h4>
+          <input type="hidden" id="lIdx" value="-1">
+          <div class="ap-form-group">
+            <label>Emoji/Ikon</label>
+            <input type="text" id="lE" placeholder="📄">
+          </div>
+          <div class="ap-form-group">
+            <label>Judul Laporan</label>
+            <input type="text" id="lJ" placeholder="Nama laporan">
+          </div>
+          <div class="ap-form-group">
+            <label>Deskripsi</label>
+            <textarea id="lD" placeholder="Deskripsi singkat"></textarea>
+          </div>
+          <div class="ap-form-group">
+            <label>Tag/Kategori</label>
+            <input type="text" id="lT" placeholder="mis. Data Kependudukan">
+          </div>
+          <div class="ap-form-group">
+            <label>Teks Tombol</label>
+            <input type="text" id="lB" placeholder="Unduh PDF">
+          </div>
+          <div class="ap-form-group">
+            <label>URL Dokumen/Foto/Video (opsional)</label>
+            <input type="text" id="lU" placeholder="https://github.com/...">
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="ap-btn" onclick="saveL()">💾 Simpan</button>
+            <button class="ap-btn ap-btn-sec" onclick="cancelL()">Batal</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB KEGIATAN -->
+      <div class="ap-panel" id="tab-keg">
+        <div class="ap-section">
+          <h3>Daftar Kegiatan</h3>
+          <div id="kList"></div>
+          <button class="ap-btn" onclick="addK()" style="margin-top:12px">+ Tambah Kegiatan</button>
+        </div>
+
+        <div class="ap-form-popup" id="kForm">
+          <h4 id="kLbl">Tambah Kegiatan</h4>
+          <input type="hidden" id="kIdx" value="-1">
+          <div class="ap-form-group">
+            <label>Emoji/Ikon</label>
+            <input type="text" id="kE" placeholder="🎉">
+          </div>
+          <div class="ap-form-group">
+            <label>Nama Kegiatan</label>
+            <input type="text" id="kJ" placeholder="Nama kegiatan">
+          </div>
+          <div class="ap-form-group">
+            <label>Tanggal/Waktu</label>
+            <input type="text" id="kT" placeholder="12 Februari 2025">
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="ap-btn" onclick="saveK()">💾 Simpan</button>
+            <button class="ap-btn ap-btn-sec" onclick="cancelK()">Batal</button>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="ap-panel" id="tab-laporan">
-      <button class="ap-add-btn" onclick="addL()">＋ Tambah Laporan</button>
-      <div id="lList"></div>
-      <div id="lForm" style="display:none">
-        <div class="ap-divider"></div>
-        <div class="ap-section-label" id="lLbl">Tambah Laporan</div>
-        <input type="hidden" id="lIdx" value="-1">
-        <div class="ap-row2">
-          <div class="ap-group"><label class="ap-label">Emoji</label><input class="ap-input" id="lE" type="text" placeholder="📊" maxlength="4"></div>
-          <div class="ap-group"><label class="ap-label">Tanggal</label><input class="ap-input" id="lT" type="text" placeholder="Des 2024"></div>
-        </div>
-        <div class="ap-group"><label class="ap-label">Judul</label><input class="ap-input" id="lJ" type="text" placeholder="Judul laporan..."></div>
-        <div class="ap-group"><label class="ap-label">Deskripsi</label><textarea class="ap-input" id="lD" rows="3" placeholder="Deskripsi singkat..."></textarea></div>
-        <div class="ap-row2">
-          <div class="ap-group"><label class="ap-label">Label Tombol</label><input class="ap-input" id="lB" type="text" placeholder="Unduh PDF"></div>
-          <div class="ap-group"><label class="ap-label">URL (opsional)</label><input class="ap-input" id="lU" type="text" placeholder="https://..."></div>
-        </div>
-        <div class="ap-form-footer">
-          <button class="ap-save-btn" onclick="saveL()">💾 Simpan</button>
-          <button class="ap-cancel-btn" onclick="cancelL()">Batal</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="ap-panel" id="tab-kegiatan">
-      <button class="ap-add-btn" onclick="addK()">＋ Tambah Kegiatan</button>
-      <div id="kList"></div>
-      <div id="kForm" style="display:none">
-        <div class="ap-divider"></div>
-        <div class="ap-section-label" id="kLbl">Tambah Kegiatan</div>
-        <input type="hidden" id="kIdx" value="-1">
-        <div class="ap-row2">
-          <div class="ap-group"><label class="ap-label">Emoji</label><input class="ap-input" id="kE" type="text" placeholder="🌾" maxlength="4"></div>
-          <div class="ap-group"><label class="ap-label">Tanggal/Ket.</label><input class="ap-input" id="kT" type="text" placeholder="April 2025 · Kelompok Tani"></div>
-        </div>
-        <div class="ap-group"><label class="ap-label">Nama Kegiatan</label><input class="ap-input" id="kJ" type="text" placeholder="Panen Raya Bersama"></div>
-        <div class="ap-form-footer">
-          <button class="ap-save-btn" onclick="saveK()">💾 Simpan</button>
-          <button class="ap-cancel-btn" onclick="cancelK()">Batal</button>
-        </div>
-      </div>
-    </div>
-
   </div>
 </div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 <script>
+const LS_KEY='kdmpData';
+const g=id=>document.getElementById(id);
+const esc=s=>s.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
 /* DATA DEFAULT */
-const DEF={
-  s:{p:'3.847',kk:'1.142',ds:'5',thn:'2025',d1:'1.921',d1s:'49,9% dari total',d2:'1.926',d2s:'50,1% dari total',d3:'812',d3s:'21,1% dari total',d4:'348',d4s:'9,0% dari total',d5:'2.104',d5s:'warga berstatus menikah',d6:'1.238',d6s:'pendidikan terakhir',tk1:'Januari 2025',tk2:'1.921',tk3:'1.926',tk4:'485',tk5:'98,4',tk6:'72,1'},
-  p:[
-    {e:'📣',j:'Jadwal Pelayanan Adminduk Terbaru 2025',i:'Mulai Januari 2025, pelayanan administrasi kependudukan dapat dilakukan setiap Senin–Kamis pukul 08.00–14.00 WIB.',t:'06 Jan 2025'},
-    {e:'💰',j:'Penyaluran BLT Dana Desa Tahap I 2025',i:'Penyaluran BLT Dana Desa tahap pertama dijadwalkan mulai 15 Januari 2025.',t:'03 Jan 2025'},
-    {e:'🚰',j:'Pembangunan Air Bersih Dusun Karangan',i:'Proyek jaringan air bersih di Dusun Karangan diperkirakan selesai akhir Februari 2025.',t:'29 Des 2024'},
-    {e:'📋',j:'Pemutakhiran Data DTKS Semester I 2025',i:'Warga yang ingin mengusulkan perubahan DTKS dapat menghubungi Petugas RT/RW hingga 31 Maret 2025.',t:'27 Des 2024'}
-  ],
-  l:[
-    {e:'📊',j:'Laporan Kependudukan Tahunan',d:'Rekapitulasi data kependudukan Kalurahan Kedungsari tahun 2024.',t:'Des 2024',b:'Unduh PDF',u:''},
-    {e:'🏘️',j:'Profil Kalurahan 2025',d:'Dokumen profil lengkap meliputi potensi wilayah dan data sosial ekonomi.',t:'Jan 2025',b:'Unduh PDF',u:''},
-    {e:'💵',j:'APBKal Tahun 2025',d:'Anggaran Pendapatan dan Belanja Kalurahan tahun 2025 secara transparan.',t:'Jan 2025',b:'Lihat Detail',u:''},
-    {e:'🏥',j:'Data DTKS 2024',d:'Data Terpadu Kesejahteraan Sosial – daftar warga penerima manfaat.',t:'Nov 2024',b:'Unduh',u:''},
-    {e:'🗓️',j:'RPJMKal 2022–2028',d:'Rencana Pembangunan Jangka Menengah Kalurahan periode 2022–2028.',t:'2022',b:'Lihat',u:''},
-    {e:'📝',j:'Monografi Kalurahan',d:'Rekaman sejarah dan perkembangan Kalurahan Kedungsari dari masa ke masa.',t:'2024',b:'Baca',u:''}
-  ],
-  k:[
-    {e:'🌾',j:'Panen Raya Bersama',t:'April 2025 · Kelompok Tani'},
-    {e:'💉',j:'Vaksinasi Polio',t:'Maret 2025 · Puskesmas'},
-    {e:'🎭',j:'Festival Budaya Desa',t:'Feb 2025 · Tahunan'},
-    {e:'📚',j:'Sosialisasi Adminduk',t:'Jan 2025 · Online'},
-    {e:'🎓',j:'Pelatihan UMKM Digital',t:'Des 2024 · Balai Desa'},
-    {e:'🏆',j:'Lomba Desa Sehat',t:'Nov 2024 · Kecamatan'}
-  ]
+let D={
+  s:{p:'5.234',kk:'1.456',ds:'12',thn:'2024',d1:'2.600',d1s:'49.7% dari total',d2:'2.634',d2s:'50.3% dari total',d3:'1.234',d3s:'Anak & remaja',d4:'3.200',d4s:'Usia produktif',d5:'800',d5s:'Lansia',d6:'456',d6s:'S1/S2/S3',tk1:'📍 Kalurahan Kedungsari, Kapanewon Pengasih, Kabupaten Kulon Progo, Yogyakarta',tk2:'📞 Hubungi kami untuk informasi lebih lanjut',tk3:'🌐 Data terbuka untuk transparansi dan partisipasi masyarakat',tk4:'📍 Kalurahan Kedungsari, Kapanewon Pengasih, Kabupaten Kulon Progo, Yogyakarta',tk5:'📞 Hubungi kami untuk informasi lebih lanjut',tk6:'🌐 Data terbuka untuk transparansi dan partisipasi masyarakat'},
+  l:[{e:'📊',j:'Laporan Bulanan',d:'Laporan kependudukan dan kegiatan bulanan Kalurahan',t:'Data Kependudukan',b:'Lihat Laporan',u:''}],
+  k:[{e:'🎊',j:'Contoh Kegiatan',t:'Deskripsi singkat kegiatan yang dilaksanakan'}]
 };
 
-const SKEY='rudata_kedungsari_v3';
-function load(){try{const r=localStorage.getItem(SKEY);return r?JSON.parse(r):JSON.parse(JSON.stringify(DEF));}catch(e){return JSON.parse(JSON.stringify(DEF));}}
-function store(d){localStorage.setItem(SKEY,JSON.stringify(d));showToast('✅ Data berhasil disimpan!');}
-let D=load();
+/* LOAD/SAVE */
+function load(){const s=localStorage.getItem(LS_KEY);if(s)try{D=JSON.parse(s)}catch(e){}}
+function store(d){localStorage.setItem(LS_KEY,JSON.stringify(d))}
 
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
-function g(id){return document.getElementById(id);}
-function t(id,v){const e=g(id);if(e)e.textContent=String(v||'');}
-function showToast(m){const e=g('toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2500);}
-function scrollToForm(id){requestAnimationFrame(()=>{const f=g(id),b=document.querySelector('.ap-body');if(f&&b)b.scrollTo({top:f.offsetTop-8,behavior:'smooth'});});}
+/* TOAST */
+function showToast(msg){const t=g('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 
-/* RENDER ALL */
-function renderAll(){renderStat();renderPengumuman();renderLaporan();renderKegiatan();}
+/* SCROLL KE FORM */
+function scrollToForm(id){setTimeout(()=>{const el=g(id);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},100);}
 
+/* RENDER */
 function renderStat(){
   const s=D.s;
-  t('hP',s.p);t('hK',s.kk);t('hD',s.ds);t('hT',s.thn);
-  t('d1',s.d1);t('d1s',s.d1s);t('d2',s.d2);t('d2s',s.d2s);
-  t('d3',s.d3);t('d3s',s.d3s);t('d4',s.d4);t('d4s',s.d4s);
-  t('d5',s.d5);t('d5s',s.d5s);t('d6',s.d6);t('d6s',s.d6s);
-  for(let n=1;n<=6;n++){t('tk'+n,s['tk'+n]);t('tk'+n+'b',s['tk'+n]);}
-}
-
-function renderPengumuman(){
-  const el=g('pengumumanList');
-  if(!el)return;
-  el.innerHTML=D.p.map(p=>`<div class="pengumuman-item" tabindex="0"><div class="pengumuman-emoji">${p.e}</div><div class="pengumuman-body"><h4>${esc(p.j)}</h4><p>${esc(p.i)}</p></div><span class="pengumuman-date">${esc(p.t)}</span></div>`).join('');
-  renderPList();
+  g('hPenduduk').textContent=s.p||'—';
+  g('hKK').textContent=s.kk||'—';
+  g('hDusun').textContent=s.ds||'—';
+  g('tahunData').textContent='Tahun '+(s.thn||'2024');
+  g('d1Val').textContent=s.d1||'—';g('d1Sub').textContent=s.d1s||'—';
+  g('d2Val').textContent=s.d2||'—';g('d2Sub').textContent=s.d2s||'—';
+  g('d3Val').textContent=s.d3||'—';g('d3Sub').textContent=s.d3s||'—';
+  g('d4Val').textContent=s.d4||'—';g('d4Sub').textContent=s.d4s||'—';
+  g('d5Val').textContent=s.d5||'—';g('d5Sub').textContent=s.d5s||'—';
+  g('d6Val').textContent=s.d6||'—';g('d6Sub').textContent=s.d6s||'—';
+  const tc=g('tickerContent');
+  tc.innerHTML=[s.tk1,s.tk2,s.tk3,s.tk4,s.tk5,s.tk6].filter(Boolean).map(t=>`<span>${esc(t)}</span>`).join('');
 }
 
 function renderLaporan(){
-  const el=g('reportsGrid');
-  if(!el)return;
-  el.innerHTML=D.l.map(l=>`<div class="report-card" tabindex="0"${l.u?' onclick="window.open(\''+l.u+'\',\'_blank\')"':''}>
-    <div class="report-icon">${l.e}</div><h3>${esc(l.j)}</h3><p>${esc(l.d)}</p>
-    <div class="report-meta"><span class="report-date">${esc(l.t)}</span><button class="report-btn">${esc(l.b)}</button></div></div>`).join('');
-  renderLList();
+  const c=g('reportsGrid');
+  if(!c)return;
+  c.innerHTML=D.l.map(l=>`<div class="report-card"><div class="report-icon">${l.e}</div><h3>${esc(l.j)}</h3><p>${esc(l.d)}</p><span class="report-tag">${esc(l.t)}</span><button class="report-btn"${l.u?' onclick="window.open(\''+l.u+'\',\'_blank\')"':''}>${esc(l.b)}</button></div>`).join('');
 }
 
 function renderKegiatan(){
-  const el=g('kegiatanStrip');
-  if(!el)return;
-  el.innerHTML=D.k.map(k=>`<div class="kegiatan-card" onclick="openLB('${k.e}','${esc(k.j)}','${esc(k.t)}')">
-    <div class="kegiatan-img">${k.e}</div><div class="kegiatan-info"><h4>${esc(k.j)}</h4><span>${esc(k.t)}</span></div></div>`).join('');
-  renderKList();
+  const c=g('activitiesList');
+  if(!c)return;
+  c.innerHTML=D.k.map(k=>`<div class="activity-item"><div class="activity-emoji">${k.e}</div><div class="activity-body"><strong>${esc(k.j)}</strong><span>${esc(k.t)}</span></div></div>`).join('');
 }
 
-function renderPList(){const c=g('pList');if(!c)return;c.innerHTML=D.p.map((p,i)=>`<div class="ap-list-item"><span style="font-size:1.3rem;flex-shrink:0">${p.e}</span><div class="ap-list-body"><strong>${esc(p.j)}</strong><span>${esc(p.t)}</span></div><div class="ap-list-actions"><button class="ap-edit" onclick="editP(${i})">Edit</button><button class="ap-del" onclick="delP(${i})">Hapus</button></div></div>`).join('');}
-function renderLList(){const c=g('lList');if(!c)return;c.innerHTML=D.l.map((l,i)=>`<div class="ap-list-item"><span style="font-size:1.3rem;flex-shrink:0">${l.e}</span><div class="ap-list-body"><strong>${esc(l.j)}</strong><span>${esc(l.t)}</span></div><div class="ap-list-actions"><button class="ap-edit" onclick="editL(${i})">Edit</button><button class="ap-del" onclick="delL(${i})">Hapus</button></div></div>`).join('');}
+/* RENDER ADMIN LISTS */
+function renderLList(){const c=g('lList');if(!c)return;c.innerHTML=D.l.map((l,i)=>`<div class="ap-list-item"><span style="font-size:1.3rem;flex-shrink:0">${l.e}</span><div class="ap-list-body"><strong>${esc(l.j)}</strong><span>${esc(l.d)}</span></div><div class="ap-list-actions"><button class="ap-edit" onclick="editL(${i})">Edit</button><button class="ap-del" onclick="delL(${i})">Hapus</button></div></div>`).join('');}
+
 function renderKList(){const c=g('kList');if(!c)return;c.innerHTML=D.k.map((k,i)=>`<div class="ap-list-item"><span style="font-size:1.3rem;flex-shrink:0">${k.e}</span><div class="ap-list-body"><strong>${esc(k.j)}</strong><span>${esc(k.t)}</span></div><div class="ap-list-actions"><button class="ap-edit" onclick="editK(${i})">Edit</button><button class="ap-del" onclick="delK(${i})">Hapus</button></div></div>`).join('');}
 
 /* SAVE STATISTIK */
 function saveStat(){
   const flds=['p','kk','ds','thn','d1','d1s','d2','d2s','d3','d3s','d4','d4s','d5','d5s','d6','d6s','tk1','tk2','tk3','tk4','tk5','tk6'];
   flds.forEach(k=>{const e=g('f_'+k);if(e&&e.value.trim())D.s[k]=e.value.trim();});
-  store(D);renderStat();
+  store(D);renderStat();showToast('✅ Statistik berhasil disimpan');
 }
-
-/* PENGUMUMAN */
-function addP(){g('pIdx').value=-1;g('pE').value='📣';g('pJ').value='';g('pI').value='';g('pT').value='';g('pLbl').textContent='Tambah Pengumuman';g('pForm').style.display='block';scrollToForm('pForm');}
-function editP(i){const p=D.p[i];g('pIdx').value=i;g('pE').value=p.e;g('pJ').value=p.j;g('pI').value=p.i;g('pT').value=p.t;g('pLbl').textContent='Edit Pengumuman';g('pForm').style.display='block';scrollToForm('pForm');}
-function saveP(){const o={e:g('pE').value||'📣',j:g('pJ').value,i:g('pI').value,t:g('pT').value};if(!o.j){alert('Judul tidak boleh kosong');return;}const idx=parseInt(g('pIdx').value);if(idx===-1)D.p.unshift(o);else D.p[idx]=o;store(D);renderPengumuman();g('pForm').style.display='none';}
-function delP(i){if(!confirm('Hapus pengumuman ini?'))return;D.p.splice(i,1);store(D);renderPengumuman();}
-function cancelP(){g('pForm').style.display='none';}
 
 /* LAPORAN */
 function addL(){g('lIdx').value=-1;g('lE').value='📄';g('lJ').value='';g('lD').value='';g('lT').value='';g('lB').value='Unduh PDF';g('lU').value='';g('lLbl').textContent='Tambah Laporan';g('lForm').style.display='block';scrollToForm('lForm');}
 function editL(i){const l=D.l[i];g('lIdx').value=i;g('lE').value=l.e;g('lJ').value=l.j;g('lD').value=l.d;g('lT').value=l.t;g('lB').value=l.b;g('lU').value=l.u||'';g('lLbl').textContent='Edit Laporan';g('lForm').style.display='block';scrollToForm('lForm');}
-function saveL(){const o={e:g('lE').value||'📄',j:g('lJ').value,d:g('lD').value,t:g('lT').value,b:g('lB').value||'Lihat',u:g('lU').value};if(!o.j){alert('Judul tidak boleh kosong');return;}const idx=parseInt(g('lIdx').value);if(idx===-1)D.l.push(o);else D.l[idx]=o;store(D);renderLaporan();g('lForm').style.display='none';}
-function delL(i){if(!confirm('Hapus laporan ini?'))return;D.l.splice(i,1);store(D);renderLaporan();}
+function saveL(){const o={e:g('lE').value||'📄',j:g('lJ').value,d:g('lD').value,t:g('lT').value,b:g('lB').value||'Lihat',u:g('lU').value};if(!o.j){alert('Judul tidak boleh kosong');return;}const idx=parseInt(g('lIdx').value);if(idx===-1)D.l.push(o);else D.l[idx]=o;store(D);renderLaporan();renderLList();g('lForm').style.display='none';showToast('✅ Laporan berhasil disimpan');}
+function delL(i){if(!confirm('Hapus laporan ini?'))return;D.l.splice(i,1);store(D);renderLaporan();renderLList();showToast('🗑️ Laporan dihapus');}
 function cancelL(){g('lForm').style.display='none';}
 
 /* KEGIATAN */
 function addK(){g('kIdx').value=-1;g('kE').value='🎉';g('kJ').value='';g('kT').value='';g('kLbl').textContent='Tambah Kegiatan';g('kForm').style.display='block';scrollToForm('kForm');}
 function editK(i){const k=D.k[i];g('kIdx').value=i;g('kE').value=k.e;g('kJ').value=k.j;g('kT').value=k.t;g('kLbl').textContent='Edit Kegiatan';g('kForm').style.display='block';scrollToForm('kForm');}
-function saveK(){const o={e:g('kE').value||'🎉',j:g('kJ').value,t:g('kT').value};if(!o.j){alert('Nama kegiatan tidak boleh kosong');return;}const idx=parseInt(g('kIdx').value);if(idx===-1)D.k.unshift(o);else D.k[idx]=o;store(D);renderKegiatan();g('kForm').style.display='none';}
-function delK(i){if(!confirm('Hapus kegiatan ini?'))return;D.k.splice(i,1);store(D);renderKegiatan();}
+function saveK(){const o={e:g('kE').value||'🎉',j:g('kJ').value,t:g('kT').value};if(!o.j){alert('Nama kegiatan tidak boleh kosong');return;}const idx=parseInt(g('kIdx').value);if(idx===-1)D.k.unshift(o);else D.k[idx]=o;store(D);renderKegiatan();renderKList();g('kForm').style.display='none';showToast('✅ Kegiatan berhasil disimpan');}
+function delK(i){if(!confirm('Hapus kegiatan ini?'))return;D.k.splice(i,1);store(D);renderKegiatan();renderKList();showToast('🗑️ Kegiatan dihapus');}
 function cancelK(){g('kForm').style.display='none';}
 
 /* PIN */
@@ -689,7 +818,7 @@ function checkPIN(){
 function openAdmin(){
   const s=D.s;
   ['p','kk','ds','thn','d1','d1s','d2','d2s','d3','d3s','d4','d4s','d5','d5s','d6','d6s','tk1','tk2','tk3','tk4','tk5','tk6'].forEach(k=>{const e=g('f_'+k);if(e)e.value=s[k]||'';});
-  renderPList();renderLList();renderKList();
+  renderLList();renderKList();
   g('adminPanel').classList.add('open');
   g('adminBadge').classList.add('visible');
   document.body.style.overflow='hidden';
@@ -724,15 +853,14 @@ btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 /* ESC KEY */
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB({target:g('lightbox')});closePIN();closeAdmin();}});
 
-/* Stagger animasi per section */
-/* PHOTO FRAME KEYBOARD */
-document.querySelectorAll('.photo-frame').forEach(f=>{
-  f.setAttribute('tabindex','0');f.setAttribute('role','button');
-  f.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f.click();}});
-});
-
 /* INIT */
-renderAll();
+load();renderStat();renderLaporan();renderKegiatan();g('footerYear').textContent=new Date().getFullYear();
+
+/* Stagger animasi per section */
+const sections=document.querySelectorAll('.section-stagger');
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.animation='fadeDown .6s ease both';obs.unobserve(e.target);}})},{threshold:.1});
+sections.forEach(s=>obs.observe(s));
 </script>
+
 </body>
 </html>
