@@ -89,25 +89,18 @@ main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:40px 20p
 .frame-label span{font-size:.72rem;color:var(--brown-lite)}
 .frame-tall .emoji-frame{aspect-ratio:3/4}
 
-/* VIDEO BUTTON */
-.video-toggle-btn{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:var(--white);border:none;padding:10px 20px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;margin:0 auto 20px;transition:var(--tr);box-shadow:0 2px 8px var(--shadow)}
-.video-toggle-btn:hover{background:var(--green);transform:translateY(-2px)}
-.video-section{display:none;margin-bottom:20px}
-.video-section.active{display:block}
-.video-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.video-card{background:var(--white);border-radius:var(--r-md);overflow:hidden;box-shadow:0 2px 12px var(--shadow);transition:var(--tr)}
-.video-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px var(--shadow)}
-.video-thumb{position:relative;width:100%;aspect-ratio:16/9;background:var(--parchment);display:flex;align-items:center;justify-content:center;font-size:3rem}
-.video-info{padding:14px}
-.video-info h4{font-weight:600;font-size:.88rem;color:var(--brown);margin-bottom:4px}
-.video-info span{font-size:.74rem;color:var(--brown-lite)}
+/* VIDEO BUTTON IN CARD */
+.card-video-btn{position:absolute;top:10px;right:10px;background:rgba(26,95,106,.95);backdrop-filter:blur(8px);color:var(--white);border:none;padding:8px 14px;border-radius:100px;font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:600;cursor:pointer;transition:var(--tr);box-shadow:0 2px 8px rgba(0,0,0,.3);z-index:5;display:flex;align-items:center;gap:6px}
+.card-video-btn:hover{background:var(--teal);transform:scale(1.05);box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.card-video-btn:active{transform:scale(0.98)}
 
 /* REPORTS */
 .reports-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-bottom:64px}
-.report-card{background:var(--white);border-radius:var(--r-md);border:1px solid rgba(61,43,31,.09);padding:20px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 8px var(--shadow);transition:var(--tr);cursor:pointer;position:relative;overflow:hidden}
+.report-card{background:var(--white);border-radius:var(--r-md);border:1px solid rgba(61,43,31,.09);padding:20px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 8px var(--shadow);transition:var(--tr);position:relative;overflow:hidden}
 .report-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
 .report-card:hover::before{transform:scaleX(1)}
 .report-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px var(--shadow)}
+.report-card .img-container{position:relative}
 .report-card img{width:100%;height:auto;border-radius:var(--r-sm);margin-bottom:8px;object-fit:cover;max-height:180px}
 .report-icon{font-size:1.9rem}
 .report-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--brown);font-weight:700}
@@ -120,8 +113,9 @@ main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:40px 20p
 /* KEGIATAN */
 .kegiatan-strip{display:flex;gap:16px;overflow-x:auto;padding-bottom:12px;margin-bottom:64px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
 .kegiatan-strip::-webkit-scrollbar{height:5px}.kegiatan-strip::-webkit-scrollbar-track{background:rgba(61,43,31,.07);border-radius:4px}.kegiatan-strip::-webkit-scrollbar-thumb{background:var(--brown-lite);border-radius:4px}
-.kegiatan-card{flex:0 0 260px;scroll-snap-align:start;background:var(--white);border-radius:var(--r-md);overflow:hidden;box-shadow:0 2px 10px var(--shadow);transition:var(--tr);cursor:pointer}
+.kegiatan-card{flex:0 0 260px;scroll-snap-align:start;background:var(--white);border-radius:var(--r-md);overflow:hidden;box-shadow:0 2px 10px var(--shadow);transition:var(--tr);position:relative}
 .kegiatan-card:hover{transform:translateY(-3px) scale(1.015);box-shadow:0 10px 28px var(--shadow)}
+.kegiatan-card .img-container{position:relative}
 .kegiatan-card img{width:100%;height:160px;object-fit:cover;display:block}
 .kegiatan-img{height:160px;background:linear-gradient(135deg,var(--parchment),var(--cream));display:flex;align-items:center;justify-content:center;font-size:3rem;border-bottom:2px dashed rgba(160,120,80,.3)}
 .kegiatan-info{padding:14px}
@@ -278,40 +272,16 @@ footer::before{content:'';position:absolute;inset:0;background:url("data:image/s
 
   <section id="foto" class="fade-in">
     <div class="section-header"><h2 class="section-title">🖼️ Dinding & Foto</h2><div class="section-line"></div><span class="section-tag">Galeri</span></div>
-    <div style="text-align:center;margin-bottom:20px">
-      <button class="video-toggle-btn" onclick="togglePhotoVideos()">
-        <span id="photoVideoIcon">▶️</span> <span id="photoVideoText">Tampilkan Video</span>
-      </button>
-    </div>
-    <div class="video-section" id="photoVideoSection">
-      <div class="video-grid" id="photoVideoGrid"></div>
-    </div>
     <div class="photo-wall" id="photoWall"></div>
   </section>
 
   <section id="laporan" class="fade-in">
     <div class="section-header"><h2 class="section-title">📋 Laporan & Dokumen</h2><div class="section-line"></div><span class="section-tag">Unduh</span></div>
-    <div style="text-align:center;margin-bottom:20px">
-      <button class="video-toggle-btn" onclick="toggleReportVideos()">
-        <span id="reportVideoIcon">▶️</span> <span id="reportVideoText">Tampilkan Video</span>
-      </button>
-    </div>
-    <div class="video-section" id="reportVideoSection">
-      <div class="video-grid" id="reportVideoGrid"></div>
-    </div>
     <div class="reports-grid" id="reportsGrid"></div>
   </section>
 
   <section id="kegiatan" class="fade-in">
     <div class="section-header"><h2 class="section-title">🎉 Kegiatan Kalurahan</h2><div class="section-line"></div><span class="section-tag">Terbaru</span></div>
-    <div style="text-align:center;margin-bottom:20px">
-      <button class="video-toggle-btn" onclick="toggleKegiatanVideos()">
-        <span id="kegiatanVideoIcon">▶️</span> <span id="kegiatanVideoText">Tampilkan Video</span>
-      </button>
-    </div>
-    <div class="video-section" id="kegiatanVideoSection">
-      <div class="video-grid" id="kegiatanVideoGrid"></div>
-    </div>
     <div class="kegiatan-strip" id="kegiatanStrip"></div>
   </section>
 </main>
@@ -327,7 +297,7 @@ footer::before{content:'';position:absolute;inset:0;background:url("data:image/s
         <a href="https://dukcapil.jogjaprov.go.id/" target="_blank" rel="noopener" class="qa-btn green">🪪 Adminduk Online</a>
         <a href="https://sid.kemendesa.go.id/" target="_blank" rel="noopener" class="qa-btn green">🗂️ SID Kemendes</a>
         <a href="https://wa.me/628123456789" target="_blank" rel="noopener" class="qa-btn teal">💬 WhatsApp Desa</a>
-        <a href="mailto:info@kedungsari.desa.id" class="qa-btn teal">✉️ Surel Kalurahan</a>
+        <a href="/cdn-cgi/l/email-protection#1970777f7659727c7d6c777e6a786b70377d7c6a7837707d" class="qa-btn teal">✉️ Surel Kalurahan</a>
       </div>
     </div>
     <div class="footer-top">
@@ -350,7 +320,7 @@ footer::before{content:'';position:absolute;inset:0;background:url("data:image/s
         <ul>
           <li><a href="#">📍 Jl. Raya Kedungsari No.1, Yogyakarta</a></li>
           <li><a href="tel:+6274123456">📞 (0274) 123-4567</a></li>
-          <li><a href="mailto:info@kedungsari.desa.id">✉️ info@kedungsari.desa.id</a></li>
+          <li><a href="/cdn-cgi/l/email-protection#4c25222a230c27292839222b3f2d3e256228293f2d622528">✉️ <span class="__cf_email__" data-cfemail="3f565159507f545a5b4a51584c5e4d56115b5a4c5e11565b">[email&#160;protected]</span></a></li>
           <li><a href="#">🕐 Senin–Kamis, 08.00–14.00</a></li>
           <li><a href="#">🌐 kalurahan-kedungsari.github.io</a></li>
         </ul>
@@ -511,7 +481,7 @@ footer::before{content:'';position:absolute;inset:0;background:url("data:image/s
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Base URL untuk GitHub repo
 const GITHUB_BASE = 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/assets/images/';
 
@@ -549,7 +519,7 @@ let D=JSON.parse(localStorage.getItem('rumahData')||'null')||JSON.parse(JSON.str
 function store(d){localStorage.setItem('rumahData',JSON.stringify(d));}
 
 /* RENDER */
-function renderAll(){renderStat();renderFoto();renderLaporan();renderKegiatan();renderPhotoVideos();renderReportVideos();renderKegiatanVideos();renderHero();}
+function renderAll(){renderStat();renderFoto();renderLaporan();renderKegiatan();renderHero();}
 function renderStat(){
   const s=D.s;
   g('headerStats').innerHTML=`
@@ -574,14 +544,17 @@ function renderFoto(){
   const c=g('photoWall');
   if(!c)return;
   c.innerHTML=D.foto.map((f,i)=>{
+    const videoBtn=f.vid?`<button class="card-video-btn" onclick="event.stopPropagation();window.open('${esc(f.vid)}','_blank')">▶️ Video</button>`:'';
     if(f.img){
       const imgUrl=GITHUB_BASE+f.img;
       return `<div class="photo-frame" onclick="openPhotoLB(${i})">
+        ${videoBtn}
         <img src="${imgUrl}" alt="${esc(f.j)}"/>
         <div class="frame-label"><strong>${esc(f.j)}</strong><span>${esc(f.d)}</span></div>
       </div>`;
     }else{
       return `<div class="photo-frame" onclick="openFotoLB('${f.e}','${esc(f.j)}','${esc(f.d)}')">
+        ${videoBtn}
         <div class="emoji-frame"><span class="big-emoji">${f.e}</span><span class="frame-caption">${esc(f.d)}</span></div>
         <div class="frame-label"><strong>${esc(f.j)}</strong><span>${esc(f.d)}</span></div>
       </div>`;
@@ -589,33 +562,15 @@ function renderFoto(){
   }).join('');
 }
 
-function renderPhotoVideos(){
-  const videos=D.foto.filter(f=>f.vid);
-  const c=g('photoVideoGrid');
-  if(!c)return;
-  if(videos.length===0){
-    c.innerHTML='<p style="color:var(--brown-lite);text-align:center;grid-column:1/-1">Belum ada video tersedia</p>';
-  }else{
-    c.innerHTML=videos.map(v=>`
-      <div class="video-card">
-        <div class="video-thumb">${v.e}</div>
-        <div class="video-info">
-          <h4>${esc(v.j)}</h4>
-          <span><a href="${esc(v.vid)}" target="_blank" style="color:var(--teal)">▶️ Tonton Video</a></span>
-        </div>
-      </div>
-    `).join('');
-  }
-}
-
 function renderLaporan(){
   const c=g('reportsGrid');
   if(!c)return;
   c.innerHTML=D.l.map((l,i)=>{
+    const videoBtn=l.vid?`<button class="card-video-btn" onclick="event.stopPropagation();window.open('${esc(l.vid)}','_blank')">▶️ Video</button>`:'';
     let imgTag='';
     if(l.img){
       const imgUrl=GITHUB_BASE+l.img;
-      imgTag=`<img src="${imgUrl}" alt="${esc(l.j)}"/>`;
+      imgTag=`<div class="img-container">${videoBtn}<img src="${imgUrl}" alt="${esc(l.j)}"/></div>`;
     }else{
       imgTag=`<div class="report-icon">${l.e}</div>`;
     }
@@ -625,43 +580,26 @@ function renderLaporan(){
       <p>${esc(l.d)}</p>
       <div class="report-meta">
         <span class="report-date">${esc(l.t)}</span>
-        <button class="report-btn">${esc(l.b)}</button>
+        <button class="report-btn" onclick="event.stopPropagation();window.open('${esc(l.u||'#')}','_blank')">${esc(l.b)}</button>
       </div>
     </div>`;
   }).join('');
-}
-
-function renderReportVideos(){
-  const videos=D.l.filter(l=>l.vid);
-  const c=g('reportVideoGrid');
-  if(!c)return;
-  if(videos.length===0){
-    c.innerHTML='<p style="color:var(--brown-lite);text-align:center;grid-column:1/-1">Belum ada video tersedia</p>';
-  }else{
-    c.innerHTML=videos.map(v=>`
-      <div class="video-card">
-        <div class="video-thumb">${v.e}</div>
-        <div class="video-info">
-          <h4>${esc(v.j)}</h4>
-          <span><a href="${esc(v.vid)}" target="_blank" style="color:var(--teal)">▶️ Tonton Video</a></span>
-        </div>
-      </div>
-    `).join('');
-  }
 }
 
 function renderKegiatan(){
   const c=g('kegiatanStrip');
   if(!c)return;
   c.innerHTML=D.k.map((k,i)=>{
+    const videoBtn=k.vid?`<button class="card-video-btn" onclick="event.stopPropagation();window.open('${esc(k.vid)}','_blank')">▶️ Video</button>`:'';
     if(k.img){
       const imgUrl=GITHUB_BASE+k.img;
       return `<div class="kegiatan-card" onclick="openKegiatanLB(${i})">
-        <img src="${imgUrl}" alt="${esc(k.j)}"/>
+        <div class="img-container">${videoBtn}<img src="${imgUrl}" alt="${esc(k.j)}"/></div>
         <div class="kegiatan-info"><h4>${esc(k.j)}</h4><span>${esc(k.t)}</span></div>
       </div>`;
     }else{
       return `<div class="kegiatan-card" onclick="openKegiatanLB(${i})">
+        ${videoBtn}
         <div class="kegiatan-img">${k.e}</div>
         <div class="kegiatan-info"><h4>${esc(k.j)}</h4><span>${esc(k.t)}</span></div>
       </div>`;
@@ -669,74 +607,9 @@ function renderKegiatan(){
   }).join('');
 }
 
-function renderKegiatanVideos(){
-  const videos=D.k.filter(k=>k.vid);
-  const c=g('kegiatanVideoGrid');
-  if(!c)return;
-  if(videos.length===0){
-    c.innerHTML='<p style="color:var(--brown-lite);text-align:center;grid-column:1/-1">Belum ada video tersedia</p>';
-  }else{
-    c.innerHTML=videos.map(v=>`
-      <div class="video-card">
-        <div class="video-thumb">${v.e}</div>
-        <div class="video-info">
-          <h4>${esc(v.j)}</h4>
-          <span><a href="${esc(v.vid)}" target="_blank" style="color:var(--teal)">▶️ Tonton Video</a></span>
-        </div>
-      </div>
-    `).join('');
-  }
-}
-
 function renderHero(){
   const heroImg=GITHUB_BASE+'hero.jpg';
   g('heroImage').innerHTML=`<img src="${heroImg}" alt="Hero Kalurahan Kedungsari" onerror="this.style.display='none'"/>`;
-}
-
-/* VIDEO TOGGLE */
-function togglePhotoVideos(){
-  const sec=g('photoVideoSection');
-  const icon=g('photoVideoIcon');
-  const text=g('photoVideoText');
-  if(sec.classList.contains('active')){
-    sec.classList.remove('active');
-    icon.textContent='▶️';
-    text.textContent='Tampilkan Video';
-  }else{
-    sec.classList.add('active');
-    icon.textContent='⏸️';
-    text.textContent='Sembunyikan Video';
-  }
-}
-
-function toggleReportVideos(){
-  const sec=g('reportVideoSection');
-  const icon=g('reportVideoIcon');
-  const text=g('reportVideoText');
-  if(sec.classList.contains('active')){
-    sec.classList.remove('active');
-    icon.textContent='▶️';
-    text.textContent='Tampilkan Video';
-  }else{
-    sec.classList.add('active');
-    icon.textContent='⏸️';
-    text.textContent='Sembunyikan Video';
-  }
-}
-
-function toggleKegiatanVideos(){
-  const sec=g('kegiatanVideoSection');
-  const icon=g('kegiatanVideoIcon');
-  const text=g('kegiatanVideoText');
-  if(sec.classList.contains('active')){
-    sec.classList.remove('active');
-    icon.textContent='▶️';
-    text.textContent='Tampilkan Video';
-  }else{
-    sec.classList.add('active');
-    icon.textContent='⏸️';
-    text.textContent='Sembunyikan Video';
-  }
 }
 
 /* ADMIN LIST RENDER */
@@ -823,7 +696,6 @@ function saveFoto(){
   if(idx===-1)D.foto.push(o);else D.foto[idx]=o;
   store(D);
   renderFoto();
-  renderPhotoVideos();
   renderFotoList();
   g('fotoForm').classList.remove('active');
   showToast('✅ Foto berhasil disimpan');
@@ -833,7 +705,6 @@ function delFoto(i){
   D.foto.splice(i,1);
   store(D);
   renderFoto();
-  renderPhotoVideos();
   renderFotoList();
   showToast('🗑️ Foto berhasil dihapus');
 }
@@ -885,7 +756,6 @@ function saveL(){
   if(idx===-1)D.l.push(o);else D.l[idx]=o;
   store(D);
   renderLaporan();
-  renderReportVideos();
   renderLList();
   g('lForm').classList.remove('active');
   showToast('✅ Laporan berhasil disimpan');
@@ -895,7 +765,6 @@ function delL(i){
   D.l.splice(i,1);
   store(D);
   renderLaporan();
-  renderReportVideos();
   renderLList();
   showToast('🗑️ Laporan berhasil dihapus');
 }
@@ -938,7 +807,6 @@ function saveK(){
   if(idx===-1)D.k.unshift(o);else D.k[idx]=o;
   store(D);
   renderKegiatan();
-  renderKegiatanVideos();
   renderKList();
   g('kForm').classList.remove('active');
   showToast('✅ Kegiatan berhasil disimpan');
@@ -948,7 +816,6 @@ function delK(i){
   D.k.splice(i,1);
   store(D);
   renderKegiatan();
-  renderKegiatanVideos();
   renderKList();
   showToast('🗑️ Kegiatan berhasil dihapus');
 }
@@ -1044,14 +911,4 @@ function closeLB(ev){
 
 /* BACK TO TOP */
 const btt=g('backToTop');
-window.addEventListener('scroll',()=>btt.classList.toggle('show',scrollY>320));
-btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-
-/* ESC KEY */
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB({target:g('lightbox')});closePIN();closeAdmin();}});
-
-/* INIT */
-renderAll();
-</script>
-</body>
-</html>
+window.addEventListener('scroll',()=>btt.classLis
