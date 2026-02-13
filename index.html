@@ -518,8 +518,22 @@ const DEF={
 let D=JSON.parse(localStorage.getItem('rumahData')||'null')||JSON.parse(JSON.stringify(DEF));
 function store(d){localStorage.setItem('rumahData',JSON.stringify(d));}
 
+// Pastikan data tersedia saat pertama kali load
+if(!localStorage.getItem('rumahData')){
+  console.log('Initializing default data...');
+  D=JSON.parse(JSON.stringify(DEF));
+  store(D);
+}
+
 /* RENDER */
-function renderAll(){renderStat();renderFoto();renderLaporan();renderKegiatan();renderHero();}
+function renderAll(){
+  console.log('Rendering all sections...',D);
+  renderStat();
+  renderFoto();
+  renderLaporan();
+  renderKegiatan();
+  renderHero();
+}
 function renderStat(){
   const s=D.s;
   g('headerStats').innerHTML=`
@@ -911,4 +925,14 @@ function closeLB(ev){
 
 /* BACK TO TOP */
 const btt=g('backToTop');
-window.addEventListener('scroll',()=>btt.classLis
+window.addEventListener('scroll',()=>btt.classList.toggle('show',scrollY>320));
+btt.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+/* ESC KEY */
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB({target:g('lightbox')});closePIN();closeAdmin();}});
+
+/* INIT */
+renderAll();
+</script>
+</body>
+</html>
