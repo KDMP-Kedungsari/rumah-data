@@ -143,34 +143,6 @@ main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:40px 20p
 }
 .card-video-btn:active{transform:scale(0.98)}
 
-/* PDF BADGE */
-.pdf-badge{
-  position:absolute;
-  top:10px;
-  right:10px;
-  background:rgba(139,32,32,.95);
-  backdrop-filter:blur(8px);
-  color:var(--white);
-  border:none;
-  padding:8px 14px;
-  border-radius:100px;
-  font-family:'DM Sans',sans-serif;
-  font-size:.75rem;
-  font-weight:600;
-  cursor:pointer;
-  transition:var(--tr);
-  box-shadow:0 2px 8px rgba(0,0,0,.3);
-  z-index:5;
-  display:flex;
-  align-items:center;
-  gap:6px;
-}
-.pdf-badge:hover{
-  background:var(--red);
-  transform:scale(1.05);
-  box-shadow:0 4px 12px rgba(0,0,0,.4);
-}
-
 .emoji-frame{aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--parchment),var(--cream));border:2px dashed rgba(160,120,80,.35)}
 .emoji-frame .big-emoji{font-size:2.8rem;line-height:1}
 .emoji-frame .frame-caption{font-size:.78rem;color:var(--brown-lite);text-align:center;padding:0 12px;font-style:italic}
@@ -310,7 +282,6 @@ main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:40px 20p
 @keyframes lbIn{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
 .lightbox-content{width:100%;background:var(--white);border-radius:var(--r-md);overflow:hidden}
 .lightbox-content img{width:100%;height:auto;display:block;max-height:70vh;object-fit:contain}
-.lightbox-content iframe{width:100%;height:70vh;border:none;display:block}
 .lightbox-emoji-big{width:100%;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:5rem;gap:16px;background:rgba(245,239,224,.05);border-radius:var(--r-md)}
 .lightbox-caption{padding:20px;background:var(--white);color:var(--brown)}
 .lightbox-caption strong{display:block;font-size:1.1rem;margin-bottom:8px}
@@ -423,7 +394,7 @@ footer::before{content:'';position:absolute;inset:0;background:url("data:image/s
         <a href="https://dukcapil.jogjaprov.go.id/" target="_blank" rel="noopener" class="qa-btn green">🪪 Adminduk Online</a>
         <a href="https://sid.kemendesa.go.id/" target="_blank" rel="noopener" class="qa-btn green">🗂️ SID Kemendes</a>
         <a href="https://wa.me/628123456789" target="_blank" rel="noopener" class="qa-btn teal">💬 WhatsApp Desa</a>
-        <a href="/cdn-cgi/l/email-protection#a8c1c6cec7e8c3cdccddc6cfdbc9dac186c1cc" class="qa-btn teal">✉️ Surel Kalurahan</a>
+        <a href="mailto:info@kedungsari.id" class="qa-btn teal">✉️ Surel Kalurahan</a>
       </div>
     </div>
     <div class="footer-top">
@@ -445,7 +416,7 @@ footer::before{content:'';position:absolute;inset:0;background:url("data:image/s
         <ul>
           <li><a href="#">📍 Jl. Raya Kedungsari No.1, Yogyakarta</a></li>
           <li><a href="tel:+6274123456">📞 (0274) 123-4567</a></li>
-          <li><a href="/cdn-cgi/l/email-protection#51383f373e113a3435243f36223023387f3835">✉️ <span class="__cf_email__" data-cfemail="4d24232b220d26282938232a3e2c3f24632429">[email&#160;protected]</span></a></li>
+          <li><a href="mailto:info@kedungsari.id">✉️ info@kedungsari.id</a></li>
           <li><a href="#">🕐 Senin–Kamis, 08.00–14.00</a></li>
         </ul>
       </div>
@@ -482,7 +453,7 @@ footer::before{content:'';position:absolute;inset:0;background:url("data:image/s
 
 <div id="toast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 /* ═══════════════════════════════════════════════════════════════
    DATA HARDCODED - SEPERTI PRODUCT.HTML
    Edit bagian ini untuk mengubah foto, video, dan galeri
@@ -519,14 +490,14 @@ const DATA_FOTO_DINDING = [
     id: 'foto-1',
     title: 'Balai Desa Kedungsari',
     description: 'Gedung pemerintahan kalurahan yang melayani warga',
-    image: 'images/dinding/balai-desa.jpg',
+    image: 'assets/imges/dinding/balai-desa.jpg',
     fallbackEmoji: '🏛️',
-    videoUrl: 'https://www.youtube.com/watch?v=ay6HP5t_wCI',
+    videoUrl: '',
     hasVideo: true,
-    pdfUrl: 'images/laporan/laporan1.pdf',  // URL PDF jika ada
+    pdfUrl: 'assets/imges/laporan/laporan.pdf',  // URL PDF jika ada
     isPdf: true,  // Set true jika ini file PDF
     photos: [
-      { url: 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/imges/dinding/balai-desa.jpg', caption: 'Tampak depan Balai Desa' },
+      { url: 'assets/imges/dinding/balai-desa.jpg', caption: 'Tampak depan Balai Desa' },
       { url: 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/imges/dinding/balai-dalam.jpg', caption: 'Ruang pelayanan' }
     ]
   },
@@ -534,12 +505,10 @@ const DATA_FOTO_DINDING = [
     id: 'foto-2',
     title: 'Sawah Hijau Membentang',
     description: 'Pemandangan sawah yang asri di musim tanam',
-    image: 'assets/images/dinding/rapat.jpeg',
+    image: 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/imges/dinding/sawah.jpg',
     fallbackEmoji: '🌾',
-    videoUrl: 'https://www.youtube.com/watch?v=MhJdGzrB3FQ',
-    hasVideo: true,
-    pdfUrl: '',
-    isPdf: false,
+    videoUrl: 'https://youtube.com/watch?v=...',
+    hasVideo: false,
     photos: []
   },
   {
@@ -550,21 +519,6 @@ const DATA_FOTO_DINDING = [
     fallbackEmoji: '🏥',
     videoUrl: '',
     hasVideo: false,
-    pdfUrl: '',
-    isPdf: false,
-    photos: []
-  },
-  // CONTOH FOTO PDF
-  {
-    id: 'foto-4',
-    title: 'Dokumen Profil Desa',
-    description: 'Profil lengkap Kalurahan Kedungsari',
-    image: '',
-    fallbackEmoji: '📄',
-    videoUrl: '',
-    hasVideo: false,
-    pdfUrl: 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/docs/profil-desa.pdf',  // URL PDF
-    isPdf: true,  // Set true untuk menampilkan sebagai PDF
     photos: []
   }
 ];
@@ -578,14 +532,12 @@ const DATA_LAPORAN = [
     date: '15 Januari 2025',
     buttonText: 'Lihat Foto',
     url: '#',
-    image: 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/imges/laporan/keuangan-q1.jpg',
+    image: 'assets/imges/dinding/balai-desa.jpg',
     fallbackEmoji: '📄',
     videoUrl: '',
-    hasVideo: false,
-    pdfUrl: '',  // URL PDF jika ada
-    isPdf: false,  // Set true jika ini file PDF
+    hasVideo: true,
     photos: [
-      { url: 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/imges/laporan/detail1.jpg', caption: 'Halaman 1' },
+      { url: 'assets/imges/dinding/balai-desa.jpg', caption: 'Halaman 1' },
       { url: 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/imges/laporan/detail2.jpg', caption: 'Halaman 2' }
     ]
   },
@@ -600,24 +552,6 @@ const DATA_LAPORAN = [
     fallbackEmoji: '📊',
     videoUrl: 'https://youtube.com/watch?v=...',
     hasVideo: false,
-    pdfUrl: '',
-    isPdf: false,
-    photos: []
-  },
-  // CONTOH LAPORAN PDF
-  {
-    id: 'lap-3',
-    title: 'APBDes 2025 (PDF)',
-    description: 'Anggaran Pendapatan dan Belanja Desa tahun 2025',
-    date: '5 Januari 2025',
-    buttonText: 'Lihat PDF',
-    url: '#',
-    image: '',
-    fallbackEmoji: '💰',
-    videoUrl: '',
-    hasVideo: false,
-    pdfUrl: 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/docs/apbdes-2025.pdf',
-    isPdf: true,
     photos: []
   }
 ];
@@ -628,14 +562,12 @@ const DATA_KEGIATAN = [
     id: 'keg-1',
     title: 'Gotong Royong Desa',
     date: '20 Januari 2025',
-    image: 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/imges/kegiatan/gotong-royong.jpg',
+    image: 'assets/imges/dinding/balai-desa.jpg',
     fallbackEmoji: '🎉',
     videoUrl: 'https://youtube.com/watch?v=...',
     hasVideo: true,
-    pdfUrl: '',
-    isPdf: false,
     photos: [
-      { url: 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/imges/kegiatan/gotong1.jpg', caption: 'Warga bergotong royong' },
+      { url: 'assets/imges/dinding/balai-desa.jpg', caption: 'Warga bergotong royong' },
       { url: 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/imges/kegiatan/gotong2.jpg', caption: 'Hasil kerja bersama' }
     ]
   },
@@ -645,10 +577,8 @@ const DATA_KEGIATAN = [
     date: '18 Januari 2025',
     image: '',
     fallbackEmoji: '🎓',
-    videoUrl: '',
+    videoUrl: 'true',
     hasVideo: false,
-    pdfUrl: '',
-    isPdf: false,
     photos: []
   }
 ];
@@ -657,7 +587,7 @@ const DATA_KEGIATAN = [
 const HERO_IMAGE = 'https://raw.githubusercontent.com/KDMP-Kedungsari/rumah-data/main/imges/hero.jpg';
 
 /* ═══════════════════════════════════════════════════════════════
-   HELPER FUNCTIONS
+   RENDER FUNCTIONS
    ═══════════════════════════════════════════════════════════════ */
 
 const g = id => document.getElementById(id);
@@ -674,48 +604,11 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// ANIMASI COUNTER - Menghitung angka dari 0
-function animateCounter(element, target, duration = 2000) {
-  // Hapus koma dan konversi ke angka
-  const targetNumber = parseInt(target.replace(/,/g, ''));
-  const startTime = performance.now();
-  
-  function update(currentTime) {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    
-    // Easing function untuk smooth animation
-    const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-    const currentValue = Math.floor(targetNumber * easeOutQuart);
-    
-    // Format dengan koma
-    element.textContent = currentValue.toLocaleString('id-ID');
-    
-    if (progress < 1) {
-      requestAnimationFrame(update);
-    } else {
-      // Set nilai final dengan format asli
-      element.textContent = target;
-    }
-  }
-  
-  requestAnimationFrame(update);
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   RENDER FUNCTIONS
-   ═══════════════════════════════════════════════════════════════ */
-
 function renderStatistik() {
   const s = DATA_STATISTIK;
-  
-  // Animasi counter untuk header stats
-  setTimeout(() => {
-    animateCounter(g('hPenduduk'), s.penduduk, 2000);
-    animateCounter(g('hKK'), s.kk, 2000);
-    animateCounter(g('hDusun'), s.dusun, 1500);
-  }, 500); // Delay sedikit untuk efek yang lebih baik
-  
+  g('hPenduduk').textContent = s.penduduk;
+  g('hKK').textContent = s.kk;
+  g('hDusun').textContent = s.dusun;
   g('hTahun').textContent = s.tahun;
   
   g('dashboardRow').innerHTML = `
@@ -735,13 +628,11 @@ function renderFotoDinding() {
     const hasGallery = f.photos && f.photos.length > 0;
     const galleryBtn = hasGallery ? `<button class="photo-gallery-btn" onclick="event.stopPropagation();openGallery('foto', ${i})" title="Lihat Galeri Foto">📷 Galeri</button>` : '';
     const videoBtn = f.hasVideo && f.videoUrl ? `<button class="card-video-btn" onclick="event.stopPropagation();window.open('${esc(f.videoUrl)}','_blank')">▶️ Video</button>` : '';
-    const pdfBadge = f.isPdf ? `<span class="pdf-badge">📄 PDF</span>` : '';
     
     if (f.image) {
       return `<div class="photo-frame" onclick="openPhotoLB('${i}', 'foto')">
         ${galleryBtn}
         ${videoBtn}
-        ${pdfBadge}
         <img src="${f.image}" alt="${esc(f.title)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/>
         <div class="product-image-placeholder" style="display:none">${f.fallbackEmoji}</div>
         <div class="frame-label"><strong>${esc(f.title)}</strong><span>${esc(f.description)}</span></div>
@@ -750,7 +641,6 @@ function renderFotoDinding() {
       return `<div class="photo-frame" onclick="openPhotoLB('${i}', 'foto')">
         ${galleryBtn}
         ${videoBtn}
-        ${pdfBadge}
         <div class="emoji-frame"><span class="big-emoji">${f.fallbackEmoji}</span><span class="frame-caption">${esc(f.description)}</span></div>
         <div class="frame-label"><strong>${esc(f.title)}</strong><span>${esc(f.description)}</span></div>
       </div>`;
@@ -763,13 +653,12 @@ function renderLaporan() {
     const hasGallery = l.photos && l.photos.length > 0;
     const galleryBtn = hasGallery ? `<button class="photo-gallery-btn" onclick="event.stopPropagation();openGallery('laporan', ${i})" title="Lihat Galeri Foto">📷 Galeri</button>` : '';
     const videoBtn = l.hasVideo && l.videoUrl ? `<button class="card-video-btn" onclick="event.stopPropagation();window.open('${esc(l.videoUrl)}','_blank')">▶️ Video</button>` : '';
-    const pdfBadge = l.isPdf ? `<span class="pdf-badge">📄 PDF</span>` : '';
     
     let imgTag = '';
     if (l.image) {
-      imgTag = `<div class="img-container">${galleryBtn}${videoBtn}${pdfBadge}<img src="${l.image}" alt="${esc(l.title)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/><div class="product-image-placeholder" style="display:none;height:180px">${l.fallbackEmoji}</div></div>`;
+      imgTag = `<div class="img-container">${galleryBtn}${videoBtn}<img src="${l.image}" alt="${esc(l.title)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"/><div class="product-image-placeholder" style="display:none;height:180px">${l.fallbackEmoji}</div></div>`;
     } else {
-      imgTag = `<div style="position:relative"><div class="report-icon">${l.fallbackEmoji}</div>${pdfBadge}</div>`;
+      imgTag = `<div class="report-icon">${l.fallbackEmoji}</div>`;
     }
     
     return `<div class="report-card" onclick="openPhotoLB('${i}', 'laporan')">
@@ -872,22 +761,14 @@ function openPhotoLB(idx, type) {
     item = DATA_KEGIATAN[idx];
   }
   
-  // Jika ini PDF, tampilkan PDF viewer
-  if (item.isPdf && item.pdfUrl) {
-    g('lbContent').innerHTML = `<iframe src="${item.pdfUrl}" title="${esc(item.title)}"></iframe>`;
-  } 
-  // Jika ada gambar, tampilkan gambar
-  else if (item.image) {
+  if (item.image) {
     g('lbContent').innerHTML = `<img src="${item.image}" alt="${esc(item.title)}"/>`;
-  } 
-  // Jika tidak ada, tampilkan emoji
-  else {
+  } else {
     g('lbContent').innerHTML = `<div class="lightbox-emoji-big"><span>${item.fallbackEmoji}</span></div>`;
   }
   
   const desc = type === 'kegiatan' ? item.date : item.description;
-  const pdfNote = item.isPdf ? '<br><small style="color:var(--brown-lite)">💡 Tip: Scroll untuk melihat seluruh dokumen PDF</small>' : '';
-  g('lbCaption').innerHTML = `<strong>${esc(item.title)}</strong><br>${esc(desc)}${pdfNote}`;
+  g('lbCaption').innerHTML = `<strong>${esc(item.title)}</strong><br>${esc(desc)}`;
   g('lightbox').classList.add('active');
   document.body.style.overflow = 'hidden';
 }
@@ -916,4 +797,17 @@ document.addEventListener('keydown', e => {
 
 /* ═══════════════════════════════════════════════════════════════
    INIT
-   ══════════════════════
+   ═══════════════════════════════════════════════════════════════ */
+
+function init() {
+  renderStatistik();
+  renderFotoDinding();
+  renderLaporan();
+  renderKegiatan();
+  renderHero();
+}
+
+init();
+</script>
+</body>
+</html>
