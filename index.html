@@ -143,10 +143,10 @@ main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:40px 20p
 }
 .card-video-btn:active{transform:scale(0.98)}
 
-/* PDF BADGE */
+/* PDF BADGE - Posisi di bawah tombol video jika video ada */
 .pdf-badge{
   position:absolute;
-  top:10px;
+  top:52px;  /* Di bawah tombol video */
   right:10px;
   background:rgba(139,32,32,.95);
   backdrop-filter:blur(8px);
@@ -169,6 +169,11 @@ main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:40px 20p
   background:var(--red);
   transform:scale(1.05);
   box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+
+/* PDF Badge tanpa video - posisi normal di atas */
+.pdf-badge.solo{
+  top:10px;
 }
 
 .emoji-frame{aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--parchment),var(--cream));border:2px dashed rgba(160,120,80,.35)}
@@ -527,7 +532,7 @@ const DATA_FOTO_DINDING = [
     isPdf: true,  // Set true jika ini file PDF
     photos: [
       { url: 'assets/images/dinding/balai-desa1.jpg', caption: 'Pak Lurah' },
-      { url: 'assets/images/dinding/balai-desa2.jpg', caption: 'Pak Carik' }
+      { url: 'assets/images/dinding/balai-desa2.jpg', caption: 'Pak Carik' },
       { url: 'assets/images/dinding/balai-desa3.jpg', caption: 'Rapat' }
     ]
   },
@@ -731,9 +736,9 @@ function renderStatistik() {
       const hKK = g('hKK');
       const hDusun = g('hDusun');
       
-      if (hPenduduk) animateCounter(hPenduduk, s.penduduk, 2000);
-      if (hKK) animateCounter(hKK, s.kk, 2000);
-      if (hDusun) animateCounter(hDusun, s.dusun, 1500);
+      if (hPenduduk) animateCounter(hPenduduk, s.penduduk, 4000);
+      if (hKK) animateCounter(hKK, s.kk, 4000);
+      if (hDusun) animateCounter(hDusun, s.dusun, 3500);
     }, 500);
     
     const hTahun = g('hTahun');
@@ -770,9 +775,10 @@ function renderFotoDinding() {
     
     container.innerHTML = DATA_FOTO_DINDING.map((f, i) => {
       const hasGallery = f.photos && f.photos.length > 0;
+      const hasVideo = f.hasVideo && f.videoUrl;
       const galleryBtn = hasGallery ? `<button class="photo-gallery-btn" onclick="event.stopPropagation();openGallery('foto', ${i})" title="Lihat Galeri Foto">📷 Galeri</button>` : '';
-      const videoBtn = f.hasVideo && f.videoUrl ? `<button class="card-video-btn" onclick="event.stopPropagation();window.open('${esc(f.videoUrl)}','_blank')">▶️ Video</button>` : '';
-      const pdfBadge = f.isPdf ? `<span class="pdf-badge">📄 PDF</span>` : '';
+      const videoBtn = hasVideo ? `<button class="card-video-btn" onclick="event.stopPropagation();window.open('${esc(f.videoUrl)}','_blank')">▶️ Video</button>` : '';
+      const pdfBadge = f.isPdf ? `<span class="pdf-badge ${hasVideo ? '' : 'solo'}">📄 PDF</span>` : '';
       
       if (f.image) {
         return `<div class="photo-frame" onclick="openPhotoLB(${i}, 'foto')">
@@ -808,9 +814,10 @@ function renderLaporan() {
     
     container.innerHTML = DATA_LAPORAN.map((l, i) => {
       const hasGallery = l.photos && l.photos.length > 0;
+      const hasVideo = l.hasVideo && l.videoUrl;
       const galleryBtn = hasGallery ? `<button class="photo-gallery-btn" onclick="event.stopPropagation();openGallery('laporan', ${i})" title="Lihat Galeri Foto">📷 Galeri</button>` : '';
-      const videoBtn = l.hasVideo && l.videoUrl ? `<button class="card-video-btn" onclick="event.stopPropagation();window.open('${esc(l.videoUrl)}','_blank')">▶️ Video</button>` : '';
-      const pdfBadge = l.isPdf ? `<span class="pdf-badge">📄 PDF</span>` : '';
+      const videoBtn = hasVideo ? `<button class="card-video-btn" onclick="event.stopPropagation();window.open('${esc(l.videoUrl)}','_blank')">▶️ Video</button>` : '';
+      const pdfBadge = l.isPdf ? `<span class="pdf-badge ${hasVideo ? '' : 'solo'}">📄 PDF</span>` : '';
       
       let imgTag = '';
       if (l.image) {
