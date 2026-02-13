@@ -157,18 +157,22 @@ main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:40px 20p
   font-family:'DM Sans',sans-serif;
   font-size:.75rem;
   font-weight:600;
-  cursor:pointer;
+  cursor:pointer;  /* Pointer untuk menunjukkan clickable */
   transition:var(--tr);
   box-shadow:0 2px 8px rgba(0,0,0,.3);
   z-index:5;
   display:flex;
   align-items:center;
   gap:6px;
+  user-select:none;  /* Tidak bisa diselect */
 }
 .pdf-badge:hover{
   background:var(--red);
   transform:scale(1.05);
   box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+.pdf-badge:active{
+  transform:scale(0.98);
 }
 
 /* PDF Badge tanpa video - posisi normal di atas */
@@ -778,7 +782,7 @@ function renderFotoDinding() {
       const hasVideo = f.hasVideo && f.videoUrl;
       const galleryBtn = hasGallery ? `<button class="photo-gallery-btn" onclick="event.stopPropagation();openGallery('foto', ${i})" title="Lihat Galeri Foto">📷 Galeri</button>` : '';
       const videoBtn = hasVideo ? `<button class="card-video-btn" onclick="event.stopPropagation();window.open('${esc(f.videoUrl)}','_blank')">▶️ Video</button>` : '';
-      const pdfBadge = f.isPdf ? `<span class="pdf-badge ${hasVideo ? '' : 'solo'}">📄 PDF</span>` : '';
+      const pdfBadge = f.isPdf ? `<span class="pdf-badge ${hasVideo ? '' : 'solo'}" onclick="event.stopPropagation();openPdfDirect(${i}, 'foto')" title="Buka PDF">📄 PDF</span>` : '';
       
       if (f.image) {
         return `<div class="photo-frame" onclick="openPhotoLB(${i}, 'foto')">
@@ -817,7 +821,7 @@ function renderLaporan() {
       const hasVideo = l.hasVideo && l.videoUrl;
       const galleryBtn = hasGallery ? `<button class="photo-gallery-btn" onclick="event.stopPropagation();openGallery('laporan', ${i})" title="Lihat Galeri Foto">📷 Galeri</button>` : '';
       const videoBtn = hasVideo ? `<button class="card-video-btn" onclick="event.stopPropagation();window.open('${esc(l.videoUrl)}','_blank')">▶️ Video</button>` : '';
-      const pdfBadge = l.isPdf ? `<span class="pdf-badge ${hasVideo ? '' : 'solo'}">📄 PDF</span>` : '';
+      const pdfBadge = l.isPdf ? `<span class="pdf-badge ${hasVideo ? '' : 'solo'}" onclick="event.stopPropagation();openPdfDirect(${i}, 'laporan')" title="Buka PDF">📄 PDF</span>` : '';
       
       let imgTag = '';
       if (l.image) {
@@ -948,26 +952,56 @@ function openPhotoLB(idx, type) {
       return;
     }
     
-    // Jika ini PDF, tampilkan PDF viewer
-    if (item.isPdf && item.pdfUrl) {
-      g('lbContent').innerHTML = `<iframe src="${item.pdfUrl}" title="${esc(item.title)}"></iframe>`;
-    } 
-    // Jika ada gambar, tampilkan gambar
-    else if (item.image) {
+    // PRIORITAS: Jika ada gambar, tampilkan gambar (zoom foto)
+    if (item.image) {
       g('lbContent').innerHTML = `<img src="${item.image}" alt="${esc(item.title)}"/>`;
     } 
-    // Jika tidak ada, tampilkan emoji
+    // Jika tidak ada gambar tapi ada PDF, tampilkan PDF
+    else if (item.isPdf && item.pdfUrl) {
+      g('lbContent').innerHTML = `<iframe src="${item.pdfUrl}" title="${esc(item.title)}"></iframe>`;
+    } 
+    // Jika tidak ada keduanya, tampilkan emoji
     else {
       g('lbContent').innerHTML = `<div class="lightbox-emoji-big"><span>${item.fallbackEmoji}</span></div>`;
     }
     
     const desc = type === 'kegiatan' ? item.date : item.description;
-    const pdfNote = item.isPdf ? '<br><small style="color:var(--brown-lite)">💡 Tip: Scroll untuk melihat seluruh dokumen PDF</small>' : '';
+    const pdfNote = (!item.image && item.isPdf) ? '<br><small style="color:var(--brown-lite)">💡 Tip: Scroll untuk melihat seluruh dokumen PDF</small>' : '';
     g('lbCaption').innerHTML = `<strong>${esc(item.title)}</strong><br>${esc(desc)}${pdfNote}`;
     g('lightbox').classList.add('active');
     document.body.style.overflow = 'hidden';
   } catch (error) {
     console.error('Error in openPhotoLB:', error);
+  }
+}
+
+// Fungsi khusus untuk membuka PDF dari badge
+function openPdfDirect(idx, type) {
+  try {
+    const index = typeof idx === 'string' ? parseInt(idx) : idx;
+    
+    let item;
+    if (type === 'foto') {
+      item = DATA_FOTO_DINDING[index];
+    } else if (type === 'laporan') {
+      item = DATA_LAPORAN[index];
+    } else if (type === 'kegiatan') {
+      item = DATA_KEGIATAN[index];
+    }
+    
+    if (!item || !item.isPdf || !item.pdfUrl) {
+      console.error('PDF not found:', type, index);
+      return;
+    }
+    
+    // Tampilkan PDF di lightbox
+    g('lbContent').innerHTML = `<iframe src="${item.pdfUrl}" title="${esc(item.title)}"></iframe>`;
+    const desc = type === 'kegiatan' ? item.date : item.description;
+    g('lbCaption').innerHTML = `<strong>${esc(item.title)}</strong><br>${esc(desc)}<br><small style="color:var(--brown-lite)">💡 Tip: Scroll untuk melihat seluruh dokumen PDF</small>`;
+    g('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  } catch (error) {
+    console.error('Error in openPdfDirect:', error);
   }
 }
 
